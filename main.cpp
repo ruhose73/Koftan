@@ -1,5 +1,5 @@
-#include "authorisation.h"
 #include "cpclient.h"
+#include "readme_file_class.h"
 
 #include <QApplication>
 #include <QStyleFactory>
@@ -9,15 +9,10 @@ int main(int argc, char *argv[])
 {
    QApplication a(argc, argv);
 
-
    qApp->setStyle(QStyleFactory::create("Fusion"));
-
+   readme_file_class readme;
+   readme.writefile();
    CPclient client;
    client.show();
-
-//   Authorisation auth;
-//   auth.show();
-
-
    return a.exec();
 }

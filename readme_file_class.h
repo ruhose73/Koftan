@@ -3,9 +3,8 @@
 
 #ifndef TIME_TO_CODING_README_FILE_H
 #define TIME_TO_CODING_README_FILE_H
-
-#include "stdafx.h"
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 

@@ -10,7 +10,9 @@
 #include <QJsonParseError>
 #include <QRegExpValidator>
 #include <QStyle>
-#include "database.h"
+#include <QStandardItem>
+#include <QJsonArray>
+
 
 
 namespace Ui {
@@ -34,6 +36,8 @@ public:
     QJsonDocument doc;
     QJsonParseError docError;
     QString status;
+    int requireSize;
+
 
 
 public slots:
@@ -46,6 +50,8 @@ private slots:
     void on_LoginButton_clicked();
 
     void on_checkBox_stateChanged(int arg1);
+
+    void on_pushButton_clicked();
 
 private:
     Ui::CPclient *ui;

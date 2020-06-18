@@ -6,7 +6,6 @@ CPclient::CPclient(QWidget *parent) :
     ui(new Ui::CPclient)
 {
     ui->setupUi(this);
-
     QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
     QRegExp ipRegex ("^" + ipRange
                      + "\\." + ipRange
@@ -19,7 +18,6 @@ CPclient::CPclient(QWidget *parent) :
     socket = new QTcpSocket(this);
     connect(socket,SIGNAL(readyRead()),this,SLOT(sockReady()));
     connect(socket,SIGNAL(disconnected()),this,SLOT(sockDisc()));
-
 }
 
 CPclient::~CPclient()
@@ -27,10 +25,9 @@ CPclient::~CPclient()
     delete ui;
 }
 
-
 //      ("{\"type\":\"connect\",\"value\":\"true\"}")                                       статус подключения
-//      ("{\"type\":\"auth\",\"login\":\""+login+"\",\"password\":\""+password+"\"}")       авторизация
 //      ("{\"type\":\"status\",\"value\":\"true\"}")                                        статус авторизации
+//      ("{\"type\":\"auth\",\"login\":\""+login+"\",\"password\":\""+password+"\"}")       авторизация
 //      ("{\"type\":\"data\",\"cost\":\""+cost+"\",\"profit\":\""+profit+"\"}");            обычные данные
 
 void CPclient::on_Connection_Button_clicked()
@@ -92,12 +89,74 @@ void CPclient::sockReady()
                     QMessageBox::information(this,"Информация","Неверный пароль или логин");
                 }
             }
-            else
+            else if(doc.object().value("type").toString() == "resultSelect")
             {
-                qDebug()<<"no auth";
+                            qDebug() << "Получено: "<< Data.size() << " Всего: " << requireSize;
+                            if(Data.size() == requireSize)
+                            {
+                                QStandardItemModel* model = new QStandardItemModel(nullptr);
+
+
+                                model->setHorizontalHeaderLabels(QStringList() << "ФИО" << "Тип договора" << "Должность" << "Опыт работы" << "Паспорт" << "Страховка" << "Пенсионный счет" << "Расчетный счет" << "Номер телефона");
+
+                                QJsonArray docAr = doc.object().value("nameList").toArray();
+                                qDebug() <<docAr;
+                                QJsonArray docAr2 = doc.object().value("conType").toArray();
+                                qDebug() <<docAr2;
+                                QJsonArray docAr3 = doc.object().value("position").toArray();
+                                qDebug() <<docAr3;
+                                QJsonArray docAr4 = doc.object().value("wexp").toArray();
+                                qDebug() <<docAr4;
+                                QJsonArray docAr5 = doc.object().value("pasport").toArray();
+                                qDebug() <<docAr5;
+                                QJsonArray docAr6 = doc.object().value("insurance").toArray();
+                                qDebug() <<docAr6;
+                                QJsonArray docAr7 = doc.object().value("pension").toArray();
+                                qDebug() <<docAr7;
+                                QJsonArray docAr8 = doc.object().value("card").toArray();
+                                qDebug() << docAr8;
+                                QJsonArray docAr9 = doc.object().value("phone").toArray();
+                                qDebug() << docAr9;
+
+                                for(int i =0; i<docAr.count(); i++)
+                                {
+                                    QList<QStandardItem*> q_list;
+                                    QStandardItem* col = new QStandardItem(docAr[i].toObject().value("name").toString());
+                                    QStandardItem* col2 = new QStandardItem(docAr2[i].toObject().value("ctype").toString());
+                                    QStandardItem* col3 = new QStandardItem(docAr3[i].toObject().value("pos").toString());
+                                    QStandardItem* col4 = new QStandardItem(docAr4[i].toObject().value("exp").toString());
+                                    QStandardItem* col5 = new QStandardItem(docAr5[i].toObject().value("pas").toString());
+                                    QStandardItem* col6 = new QStandardItem(docAr6[i].toObject().value("ins").toString());
+                                    QStandardItem* col7 = new QStandardItem(docAr7[i].toObject().value("pens").toString());
+                                    QStandardItem* col8 = new QStandardItem(docAr8[i].toObject().value("crd").toString());
+                                    QStandardItem* col9 = new QStandardItem(docAr9[i].toObject().value("pn").toString());
+
+                                    q_list << col;
+                                    q_list << col2;
+                                    q_list << col3;
+                                    q_list << col4;
+                                    q_list << col5;
+                                    q_list << col6;
+                                    q_list << col7;
+                                    q_list << col8;
+                                    q_list << col9;
+                                    model->appendRow(q_list);
+                                }
+
+
+
+                                ui->tableView->setModel(model);
+                            }
+                        }
+
+            else if((doc.object().value("type").toString() == "size") && (doc.object().value("resp").toString() == "workers"))
+            {
+                requireSize = doc.object().value("length").toInt();
+                socket->write("{\"type\":\"select\",\"params\":\"workers\"}");
+                socket->waitForBytesWritten(500);
+                qDebug()<<requireSize;
             }
         }
-
 }
 
 void CPclient::on_LoginButton_clicked()
@@ -141,4 +200,13 @@ void CPclient::on_checkBox_stateChanged(int arg1)
 
     }
 
+}
+
+void CPclient::on_pushButton_clicked()
+{
+    if(socket->isOpen())
+    {
+        socket->write("{\"type\":\"recSize\",\"resp\":\"workers\"}");
+        socket->waitForBytesWritten(500);
+    }
 }
