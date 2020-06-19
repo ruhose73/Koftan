@@ -97,39 +97,60 @@ void CPclient::sockReady()
                                 QStandardItemModel* model = new QStandardItemModel(nullptr);
 
 
-                                model->setHorizontalHeaderLabels(QStringList() << "ФИО" << "Тип договора" << "Должность" << "Опыт работы" << "Паспорт" << "Страховка" << "Пенсионный счет" << "Расчетный счет" << "Номер телефона");
+                                model->setHorizontalHeaderLabels(QStringList() << "ID"
+                                << "Название" << "МО" << "МВ" << "ПФ" << "ТР" << "А"
+                                << "Э" << "ВОР" << "ДЗ"<< "ОСБ"<< "РЗ"<< "ЦЗ"<< "НИ"<< "РС");
 
-                                QJsonArray docAr = doc.object().value("nameList").toArray();
+                                QJsonArray docAr = doc.object().value("ID").toArray();
                                 qDebug() <<docAr;
-                                QJsonArray docAr2 = doc.object().value("conType").toArray();
+                                QJsonArray docAr2 = doc.object().value("Name").toArray();
                                 qDebug() <<docAr2;
-                                QJsonArray docAr3 = doc.object().value("position").toArray();
+                                QJsonArray docAr3 = doc.object().value("ACBM").toArray();
                                 qDebug() <<docAr3;
-                                QJsonArray docAr4 = doc.object().value("wexp").toArray();
+                                QJsonArray docAr4 = doc.object().value("RM").toArray();
                                 qDebug() <<docAr4;
-                                QJsonArray docAr5 = doc.object().value("pasport").toArray();
+                                QJsonArray docAr5 = doc.object().value("CPSFP").toArray();
                                 qDebug() <<docAr5;
-                                QJsonArray docAr6 = doc.object().value("insurance").toArray();
+                                QJsonArray docAr6 = doc.object().value("TC").toArray();
                                 qDebug() <<docAr6;
-                                QJsonArray docAr7 = doc.object().value("pension").toArray();
+                                QJsonArray docAr7 = doc.object().value("D").toArray();
                                 qDebug() <<docAr7;
-                                QJsonArray docAr8 = doc.object().value("card").toArray();
+                                QJsonArray docAr8 = doc.object().value("PER").toArray();
                                 qDebug() << docAr8;
-                                QJsonArray docAr9 = doc.object().value("phone").toArray();
+                                QJsonArray docAr9 = doc.object().value("RLMW").toArray();
                                 qDebug() << docAr9;
+
+                                QJsonArray docAr10 = doc.object().value("AEW").toArray();
+                                qDebug() << docAr10;
+                                QJsonArray docAr11 = doc.object().value("DIB").toArray();
+                                qDebug() << docAr11;
+                                QJsonArray docAr12 = doc.object().value("PE").toArray();
+                                qDebug() << docAr12;
+                                QJsonArray docAr13 = doc.object().value("WC").toArray();
+                                qDebug() << docAr13;
+                                QJsonArray docAr14 = doc.object().value("NPC").toArray();
+                                qDebug() << docAr14;
+                                QJsonArray docAr15 = doc.object().value("DC").toArray();
+                                qDebug() << docAr15;
 
                                 for(int i =0; i<docAr.count(); i++)
                                 {
                                     QList<QStandardItem*> q_list;
-                                    QStandardItem* col = new QStandardItem(docAr[i].toObject().value("name").toString());
-                                    QStandardItem* col2 = new QStandardItem(docAr2[i].toObject().value("ctype").toString());
-                                    QStandardItem* col3 = new QStandardItem(docAr3[i].toObject().value("pos").toString());
-                                    QStandardItem* col4 = new QStandardItem(docAr4[i].toObject().value("exp").toString());
-                                    QStandardItem* col5 = new QStandardItem(docAr5[i].toObject().value("pas").toString());
-                                    QStandardItem* col6 = new QStandardItem(docAr6[i].toObject().value("ins").toString());
-                                    QStandardItem* col7 = new QStandardItem(docAr7[i].toObject().value("pens").toString());
-                                    QStandardItem* col8 = new QStandardItem(docAr8[i].toObject().value("crd").toString());
-                                    QStandardItem* col9 = new QStandardItem(docAr9[i].toObject().value("pn").toString());
+                                    QStandardItem* col = new QStandardItem(docAr[i].toObject().value("id").toString());
+                                    QStandardItem* col2 = new QStandardItem(docAr2[i].toObject().value("name").toString());
+                                    QStandardItem* col3 = new QStandardItem(docAr3[i].toObject().value("acbm").toString());
+                                    QStandardItem* col4 = new QStandardItem(docAr4[i].toObject().value("rm").toString());
+                                    QStandardItem* col5 = new QStandardItem(docAr5[i].toObject().value("cpsfp").toString());
+                                    QStandardItem* col6 = new QStandardItem(docAr6[i].toObject().value("tc").toString());
+                                    QStandardItem* col7 = new QStandardItem(docAr7[i].toObject().value("d").toString());
+                                    QStandardItem* col8 = new QStandardItem(docAr8[i].toObject().value("per").toString());
+                                    QStandardItem* col9 = new QStandardItem(docAr9[i].toObject().value("rlmw").toString());
+                                    QStandardItem* col10 = new QStandardItem(docAr10[i].toObject().value("aew").toString());
+                                    QStandardItem* col11 = new QStandardItem(docAr11[i].toObject().value("dib").toString());
+                                    QStandardItem* col12 = new QStandardItem(docAr12[i].toObject().value("pe").toString());
+                                    QStandardItem* col13 = new QStandardItem(docAr13[i].toObject().value("wc").toString());
+                                    QStandardItem* col14 = new QStandardItem(docAr14[i].toObject().value("npc").toString());
+                                    QStandardItem* col15 = new QStandardItem(docAr15[i].toObject().value("dc").toString());
 
                                     q_list << col;
                                     q_list << col2;
@@ -140,11 +161,15 @@ void CPclient::sockReady()
                                     q_list << col7;
                                     q_list << col8;
                                     q_list << col9;
+                                    q_list << col10;
+                                    q_list << col11;
+                                    q_list << col12;
+                                    q_list << col13;
+                                    q_list << col14;
+                                    q_list << col15;
+
                                     model->appendRow(q_list);
                                 }
-
-
-
                                 ui->tableView->setModel(model);
                             }
                         }
