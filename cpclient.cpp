@@ -78,6 +78,7 @@ void CPclient::sockReady()
                     ui->passwordline->clear();
                     ui->loginline->clear();
                     QMessageBox::information(this,"Информация","Авторизация успешна");
+                    status = true;
                 }
                 else
                 {
@@ -87,6 +88,7 @@ void CPclient::sockReady()
                     ui->passwordline->clear();
                     ui->loginline->clear();
                     QMessageBox::information(this,"Информация","Неверный пароль или логин");
+                    status = false;
                 }
             }
             else if(doc.object().value("type").toString() == "resultSelect")
@@ -177,6 +179,9 @@ void CPclient::sockReady()
             else if((doc.object().value("type").toString() == "size") && (doc.object().value("resp").toString() == "workers"))
             {
                 requireSize = doc.object().value("length").toInt();
+
+                ui->statusline->setText("Размер: " + QString::number(requireSize) + " байт");
+
                 socket->write("{\"type\":\"select\",\"params\":\"workers\"}");
                 socket->waitForBytesWritten(500);
                 qDebug()<<requireSize;
@@ -198,10 +203,9 @@ void CPclient::on_checkBox_stateChanged(int arg1)
 {
     if(arg1 == Qt::Checked)
     {
-        // Создаём палитру для тёмной темы оформления
         QPalette darkPalette;
 
-        // Настраиваем палитру для цветовых ролей элементов интерфейса
+        // Настраиваем палитру для элементов интерфейса
         darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
         darkPalette.setColor(QPalette::WindowText, Qt::white);
         darkPalette.setColor(QPalette::Base, QColor(25, 25, 25));
@@ -216,7 +220,7 @@ void CPclient::on_checkBox_stateChanged(int arg1)
         darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
         darkPalette.setColor(QPalette::HighlightedText, Qt::black);
 
-        // Устанавливаем данную палитру
+        // Устанавливаем темную палитру
         qApp->setPalette(darkPalette);
     }
     else
@@ -229,9 +233,21 @@ void CPclient::on_checkBox_stateChanged(int arg1)
 
 void CPclient::on_pushButton_clicked()
 {
-    if(socket->isOpen())
+    if(status == true)
     {
-        socket->write("{\"type\":\"recSize\",\"resp\":\"workers\"}");
-        socket->waitForBytesWritten(500);
+        if(socket->isOpen())
+        {
+            socket->write("{\"type\":\"recSize\",\"resp\":\"workers\"}");
+            socket->waitForBytesWritten(500);
+        }
+        else
+        {
+            QMessageBox::information(this,"Информация","Нет соединения с сервером");
+        }
     }
+    else
+    {
+        QMessageBox::information(this,"Информация","Вы не авторизованы");
+    }
+
 }

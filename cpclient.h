@@ -35,7 +35,7 @@ public:
     quint16 port;
     QJsonDocument doc;
     QJsonParseError docError;
-    QString status;
+    bool status = NULL;
     int requireSize;
 
 
