@@ -1,7 +1,7 @@
-QT   += core gui
-QT   +=network
-QT += core
-QT += sql
+QT      += core gui
+QT      +=network
+QT      += core
+QT      += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,12 +20,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     cpclient.cpp \
-    database.cpp \
     main.cpp
 
 HEADERS += \
-    cpclient.h \
-    database.h
+    cpclient.h \ \
+    readme_file_class.h
 
 FORMS += \
     cpclient.ui
