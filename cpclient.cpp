@@ -1,6 +1,7 @@
 #include "cpclient.h"
 #include "ui_cpclient.h"
 
+
 CPclient::CPclient(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CPclient)
@@ -250,4 +251,10 @@ void CPclient::on_pushButton_clicked()
         QMessageBox::information(this,"Информация","Вы не авторизованы");
     }
 
+}
+
+void CPclient::on_CalcButton_clicked()
+{
+    Calc *calc = new Calc;
+    calc->show();
 }

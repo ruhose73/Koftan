@@ -13,7 +13,7 @@
 #include <QStandardItem>
 #include <QJsonArray>
 
-
+#include "calc.h"
 
 namespace Ui {
 class CPclient;
@@ -52,6 +52,8 @@ private slots:
     void on_checkBox_stateChanged(int arg1);
 
     void on_pushButton_clicked();
+
+    void on_CalcButton_clicked();
 
 private:
     Ui::CPclient *ui;
