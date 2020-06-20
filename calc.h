@@ -24,6 +24,14 @@ private slots:
 
     void on_PE_total_but_clicked();
 
+    void on_AEW_total_but_clicked();
+
+    void on_PER_total_but_clicked();
+
+    void on_DTB_total_but_clicked();
+
+    void on_MAT_total_but_clicked();
+
 private:
         Ui::Calc *ui;
 
@@ -63,6 +71,27 @@ private:
         float fl_PE_marriage;
         float fl_PE_prodService;
         float fl_PE_total;
+
+        float fl_AEW_additIncome;
+        float fl_AEW_addEarning;
+        float fl_AEW_total;
+
+        float fl_PER_heating;
+        float fl_PER_water;
+        float fl_PER_electricity;
+        float fl_PER_total;
+
+        float fl_DTB_insurance;
+        float fl_DTB_depreciation;
+        float fl_DTB_total;
+
+        float fl_MAT_mainMat;
+        float fl_MAT_costSf;
+        float fl_MAT_relatedMat;
+        float fl_MAT_total;
+
+
+
 };
 
 #endif // CALC_H

@@ -6,9 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
+    <width>1130</width>
     <height>790</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1130</width>
+    <height>790</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1130</width>
+    <height>790</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -279,7 +297,7 @@
       <x>10</x>
       <y>23</y>
       <width>182</width>
-      <height>234</height>
+      <height>241</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -295,7 +313,7 @@
        <property name="minimumSize">
         <size>
          <width>180</width>
-         <height>0</height>
+         <height>20</height>
         </size>
        </property>
        <property name="maximumSize">
@@ -462,7 +480,7 @@
       <x>10</x>
       <y>23</y>
       <width>182</width>
-      <height>215</height>
+      <height>231</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -600,7 +618,7 @@
       <x>10</x>
       <y>23</y>
       <width>182</width>
-      <height>279</height>
+      <height>311</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -782,7 +800,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_27">
+      <widget class="QLineEdit" name="DTB_insurance_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -799,7 +817,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_28">
+      <widget class="QLineEdit" name="DTB_depreciation_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -821,7 +839,7 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_9">
      <item>
-      <widget class="QPushButton" name="pushButton_5">
+      <widget class="QPushButton" name="DTB_total_but">
        <property name="text">
         <string>Расчет</string>
        </property>
@@ -835,7 +853,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_32">
+      <widget class="QLineEdit" name="DTB_total_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -878,12 +896,12 @@
      <item>
       <widget class="QLabel" name="label_31">
        <property name="text">
-        <string>Горячая вода</string>
+        <string>Отопление</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_33">
+      <widget class="QLineEdit" name="PER_heating_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -895,12 +913,12 @@
      <item>
       <widget class="QLabel" name="label_32">
        <property name="text">
-        <string>Холодная вода</string>
+        <string>Вода</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_34">
+      <widget class="QLineEdit" name="PER_water_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -917,7 +935,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_35">
+      <widget class="QLineEdit" name="PER_electricity_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -939,7 +957,7 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_10">
      <item>
-      <widget class="QPushButton" name="pushButton_6">
+      <widget class="QPushButton" name="PER_total_but">
        <property name="text">
         <string>Расчет</string>
        </property>
@@ -953,7 +971,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_36">
+      <widget class="QLineEdit" name="PER_total_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -1001,7 +1019,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_37">
+      <widget class="QLineEdit" name="AEW_additIncome_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -1019,7 +1037,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_38">
+      <widget class="QLineEdit" name="AEW_addEarning_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -1041,7 +1059,7 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_8">
      <item>
-      <widget class="QPushButton" name="pushButton_7">
+      <widget class="QPushButton" name="AEW_total_but">
        <property name="text">
         <string>Расчет</string>
        </property>
@@ -1055,7 +1073,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_39">
+      <widget class="QLineEdit" name="AEW_total_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -1103,7 +1121,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_14">
+      <widget class="QLineEdit" name="MAT_mainMat_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -1121,7 +1139,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_19">
+      <widget class="QLineEdit" name="MAT_costSf_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -1138,7 +1156,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_25">
+      <widget class="QLineEdit" name="MAT_relatedMat_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -1160,7 +1178,7 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_15">
      <item>
-      <widget class="QPushButton" name="pushButton_8">
+      <widget class="QPushButton" name="MAT_total_but">
        <property name="text">
         <string>Расчет</string>
        </property>
@@ -1174,7 +1192,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_40">
+      <widget class="QLineEdit" name="MAT_total_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -1213,6 +1231,140 @@
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout"/>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_9">
+   <property name="geometry">
+    <rect>
+     <x>910</x>
+     <y>30</y>
+     <width>200</width>
+     <height>481</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Общий подсчет</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_17">
+    <item>
+     <widget class="QLabel" name="label_14">
+      <property name="text">
+       <string>Количество</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="minimumSize">
+       <size>
+        <width>180</width>
+        <height>20</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_42">
+      <property name="text">
+       <string>Рентабельность</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_2">
+      <property name="minimumSize">
+       <size>
+        <width>180</width>
+        <height>20</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>111</width>
+        <height>178</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Посчитать всё</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_43">
+      <property name="text">
+       <string>Себестоимость ед. продукции</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_3">
+      <property name="minimumSize">
+       <size>
+        <width>180</width>
+        <height>20</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_44">
+      <property name="text">
+       <string>Стоимость распространяемой
+продукции</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_4">
+      <property name="minimumSize">
+       <size>
+        <width>180</width>
+        <height>20</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_45">
+      <property name="text">
+       <string>Прибыль с единицы продукции</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit_5">
+      <property name="minimumSize">
+       <size>
+        <width>180</width>
+        <height>20</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>873</x>
+     <y>0</y>
+     <width>41</width>
+     <height>801</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
   </widget>
  </widget>
  <tabstops>
