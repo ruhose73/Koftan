@@ -32,7 +32,7 @@
    <property name="title">
     <string>Расходы на сбыт</string>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -51,7 +51,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="DC_packaging_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -74,7 +74,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_2">
+      <widget class="QLineEdit" name="DC_delivery_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -97,7 +97,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_3">
+      <widget class="QLineEdit" name="DC_loading_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -121,7 +121,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_4">
+      <widget class="QLineEdit" name="DC_fees_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -145,7 +145,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_5">
+      <widget class="QLineEdit" name="DC_storageRoom_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -168,7 +168,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_6">
+      <widget class="QLineEdit" name="DC_advertising_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -191,7 +191,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_7">
+      <widget class="QLineEdit" name="DC_entertainment_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -208,7 +208,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -219,7 +219,7 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_14">
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="DC_total_but">
        <property name="text">
         <string>Расчет</string>
        </property>
@@ -233,7 +233,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_8">
+      <widget class="QLineEdit" name="DC_total_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -273,7 +273,7 @@
    <property name="flat">
     <bool>false</bool>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -291,7 +291,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_9">
+      <widget class="QLineEdit" name="NPC_plain_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -314,7 +314,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_10">
+      <widget class="QLineEdit" name="NPC_defProd_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -338,7 +338,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_11">
+      <widget class="QLineEdit" name="NPC_damProp_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -361,7 +361,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_12">
+      <widget class="QLineEdit" name="NPC_forfeits_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -384,7 +384,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_13">
+      <widget class="QLineEdit" name="NPC_lossMat_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -401,7 +401,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -412,7 +412,7 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_13">
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="NPC_total_but">
        <property name="text">
         <string>Расчет</string>
        </property>
@@ -426,7 +426,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_29">
+      <widget class="QLineEdit" name="NPC_total_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -456,7 +456,7 @@
    <property name="title">
     <string>Цеховые затраты</string>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -475,7 +475,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_15">
+      <widget class="QLineEdit" name="WC_depreciation_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -492,7 +492,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_16">
+      <widget class="QLineEdit" name="WC_heating_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -510,7 +510,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_17">
+      <widget class="QLineEdit" name="WC_deductionWage_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -528,7 +528,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_18">
+      <widget class="QLineEdit" name="WC_deductionSalary_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -539,7 +539,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -550,7 +550,7 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_12">
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="WC_total_but">
        <property name="text">
         <string>Расчет</string>
        </property>
@@ -564,7 +564,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_30">
+      <widget class="QLineEdit" name="WC_total_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -594,7 +594,7 @@
    <property name="title">
     <string>Расходы предприятия</string>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -613,7 +613,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_20">
+      <widget class="QLineEdit" name="PE_sfProducts_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -630,7 +630,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_21">
+      <widget class="QLineEdit" name="PE_primProd_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -647,7 +647,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_22">
+      <widget class="QLineEdit" name="PE_auxiliaryProd_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -664,7 +664,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_23">
+      <widget class="QLineEdit" name="PE_overheadCosts_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -681,7 +681,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_24">
+      <widget class="QLineEdit" name="PE_marriage_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -698,7 +698,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_26">
+      <widget class="QLineEdit" name="PE_prodService_line">
        <property name="minimumSize">
         <size>
          <width>180</width>
@@ -709,7 +709,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -720,7 +720,7 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_11">
      <item>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="PE_total_but">
        <property name="text">
         <string>Расчет</string>
        </property>
@@ -734,7 +734,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit_31">
+      <widget class="QLineEdit" name="PE_total_line">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -764,7 +764,7 @@
    <property name="title">
     <string>Прочие отчисления</string>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -810,7 +810,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -865,7 +865,7 @@
    <property name="title">
     <string>Энергорусуры</string>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -928,7 +928,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -983,7 +983,7 @@
    <property name="title">
     <string>Доп. оплата труда</string>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>11</x>
@@ -1030,7 +1030,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -1085,7 +1085,7 @@
    <property name="title">
     <string>Материалы</string>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -1192,59 +1192,7 @@
     </layout>
    </widget>
   </widget>
-  <widget class="Line" name="line">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>510</y>
-     <width>901</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="Line" name="line_2">
-   <property name="geometry">
-    <rect>
-     <x>224</x>
-     <y>0</y>
-     <width>20</width>
-     <height>791</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
-   </property>
-  </widget>
-  <widget class="Line" name="line_3">
-   <property name="geometry">
-    <rect>
-     <x>440</x>
-     <y>0</y>
-     <width>31</width>
-     <height>791</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
-   </property>
-  </widget>
-  <widget class="Line" name="line_4">
-   <property name="geometry">
-    <rect>
-     <x>660</x>
-     <y>0</y>
-     <width>21</width>
-     <height>791</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
-   </property>
-  </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -1255,7 +1203,7 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2"/>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -1268,29 +1216,29 @@
   </widget>
  </widget>
  <tabstops>
-  <tabstop>lineEdit</tabstop>
-  <tabstop>lineEdit_2</tabstop>
-  <tabstop>lineEdit_3</tabstop>
-  <tabstop>lineEdit_4</tabstop>
-  <tabstop>lineEdit_5</tabstop>
-  <tabstop>lineEdit_6</tabstop>
-  <tabstop>lineEdit_7</tabstop>
-  <tabstop>lineEdit_8</tabstop>
-  <tabstop>lineEdit_9</tabstop>
-  <tabstop>lineEdit_10</tabstop>
-  <tabstop>lineEdit_11</tabstop>
-  <tabstop>lineEdit_12</tabstop>
-  <tabstop>lineEdit_13</tabstop>
-  <tabstop>lineEdit_15</tabstop>
-  <tabstop>lineEdit_16</tabstop>
-  <tabstop>lineEdit_17</tabstop>
-  <tabstop>lineEdit_18</tabstop>
-  <tabstop>lineEdit_20</tabstop>
-  <tabstop>lineEdit_21</tabstop>
-  <tabstop>lineEdit_22</tabstop>
-  <tabstop>lineEdit_23</tabstop>
-  <tabstop>lineEdit_24</tabstop>
-  <tabstop>lineEdit_26</tabstop>
+  <tabstop>DC_packaging_line</tabstop>
+  <tabstop>DC_delivery_line</tabstop>
+  <tabstop>DC_loading_line</tabstop>
+  <tabstop>DC_fees_line</tabstop>
+  <tabstop>DC_storageRoom_line</tabstop>
+  <tabstop>DC_advertising_line</tabstop>
+  <tabstop>DC_entertainment_line</tabstop>
+  <tabstop>DC_total_line</tabstop>
+  <tabstop>NPC_plain_line</tabstop>
+  <tabstop>NPC_defProd_line</tabstop>
+  <tabstop>NPC_damProp_line</tabstop>
+  <tabstop>NPC_forfeits_line</tabstop>
+  <tabstop>NPC_lossMat_line</tabstop>
+  <tabstop>WC_depreciation_line</tabstop>
+  <tabstop>WC_heating_line</tabstop>
+  <tabstop>WC_deductionWage_line</tabstop>
+  <tabstop>WC_deductionSalary_line</tabstop>
+  <tabstop>PE_sfProducts_line</tabstop>
+  <tabstop>PE_primProd_line</tabstop>
+  <tabstop>PE_auxiliaryProd_line</tabstop>
+  <tabstop>PE_overheadCosts_line</tabstop>
+  <tabstop>PE_marriage_line</tabstop>
+  <tabstop>PE_prodService_line</tabstop>
  </tabstops>
  <resources/>
  <connections/>
