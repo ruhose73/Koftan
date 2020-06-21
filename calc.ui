@@ -1253,7 +1253,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="TC_quantity_line">
       <property name="minimumSize">
        <size>
         <width>180</width>
@@ -1270,7 +1270,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit_2">
+     <widget class="QLineEdit" name="TC_profitability_line">
       <property name="minimumSize">
        <size>
         <width>180</width>
@@ -1293,11 +1293,21 @@
      </spacer>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="TC_total_but">
       <property name="text">
        <string>Посчитать всё</string>
       </property>
      </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_46">
+      <property name="text">
+       <string>Итого:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="TC_total_line"/>
     </item>
     <item>
      <widget class="QLabel" name="label_43">
@@ -1307,7 +1317,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit_3">
+     <widget class="QLineEdit" name="TC_unitCost_line">
       <property name="minimumSize">
        <size>
         <width>180</width>
@@ -1325,7 +1335,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit_4">
+     <widget class="QLineEdit" name="TC_costDistrib_line">
       <property name="minimumSize">
        <size>
         <width>180</width>
@@ -1342,7 +1352,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit_5">
+     <widget class="QLineEdit" name="TC_unitProfit_line">
       <property name="minimumSize">
        <size>
         <width>180</width>

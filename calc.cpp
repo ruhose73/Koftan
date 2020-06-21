@@ -177,3 +177,44 @@ void Calc::on_MAT_total_but_clicked()
 
     ui->MAT_total_line->setText(QString("%1").arg(fl_MAT_total));
 }
+
+void Calc::on_TC_total_but_clicked()
+{
+    Calc::on_DC_total_but_clicked();
+    Calc::on_NPC_total_but_clicked();
+    Calc::on_WC_total_but_clicked();
+    Calc::on_PE_total_but_clicked();
+    Calc::on_AEW_total_but_clicked();
+    Calc::on_PER_total_but_clicked();
+    Calc::on_DTB_total_but_clicked();
+    Calc::on_MAT_total_but_clicked();
+
+    QString qstr_TC_quantity = ui->TC_quantity_line->text();
+    QString qstr_TC_profitability = ui->TC_profitability_line->text();
+
+    //если придется передавать в string вормате, то float оставим для
+    //возможности считать локально
+    fl_TC_quantity = qstr_TC_quantity.toFloat();
+    fl_TC_profitability = qstr_TC_profitability.toFloat();
+
+    fl_TC_total = (fl_DC_total+fl_NPC_total+fl_WC_total+fl_PE_total+fl_AEW_total+fl_PER_total+fl_DTB_total+fl_MAT_total);
+    ui->TC_total_line->setText(QString::number(fl_TC_total, 'f', 5));
+
+    //себестоимость 1 единицы продукции
+    fl_TC_unitCost = (fl_TC_total / fl_TC_quantity);
+    ui->TC_unitCost_line->setText(QString::number(fl_TC_unitCost, 'f', 5));
+
+    //стоймость распространяемой продукции
+    fl_TC_percent = (fl_TC_profitability / (float)(100)+1);
+    fl_TC_costDistrib = (fl_TC_percent * fl_TC_unitCost);
+    ui->TC_costDistrib_line->setText(QString::number(fl_TC_costDistrib, 'f', 5));
+
+    //прибыль с 1 штуки
+    fl_TC_unitProfit = (fl_TC_costDistrib - fl_TC_unitCost);
+    ui->TC_unitProfit_line->setText(QString::number(fl_TC_unitProfit, 'f', 5));
+    fl_TC_total = 0;
+}
+
+//fl_TC_unitProfit = (fl_TC_costDistrib - fl_TC_unitCost);
+//ui->TC_unitProfit_line->setText(QString("%1").arg(fl_TC_unitProfit));
+//fl_TC_total = 0;
