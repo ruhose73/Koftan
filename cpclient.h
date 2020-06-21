@@ -13,7 +13,7 @@
 #include <QStandardItem>
 #include <QJsonArray>
 #include <QFileDialog>
-
+#include <QFile>
 #include "calc.h"
 
 namespace Ui {
@@ -25,34 +25,46 @@ class CPclient : public QWidget
     Q_OBJECT
 
 public:
+
     explicit CPclient(QWidget *parent = nullptr);
+
     ~CPclient();
 
     QTcpSocket* socket;
 
-//    QJsonDocument doc;
-//    QJsonParseError docError;
-//    bool status = NULL;
-//    int requireSize;
-
 private:
+
     QString qstr_ipaddres;
+
     QString qstr_login;
+
     QString qstr_password;
-    QByteArray Data;
 
-    QJsonDocument doc;
-    QJsonParseError docError;
+    QByteArray qba_Data;
+
+    QJsonDocument qjd_doc;
+    QJsonDocument qjd_path;
+
+    QJsonParseError qjpe_docError;
+
     bool bl_logStatus = NULL;
-    bool bl_conStatus = NULL;
-    int requireSize;
 
+    bool bl_conStatus = NULL;
+
+    bool bl_localBase = NULL;
+
+    int int_requireSize;
+
+    QString qstr_PathDB;
 
 public slots:
+
     void sockReady();
+
     void sockDisc();
 
 private slots:
+
     void on_Connection_Button_clicked();
 
     void on_LoginButton_clicked();
@@ -63,7 +75,10 @@ private slots:
 
     void on_CalcButton_clicked();
 
+    void on_chooseDB_button_clicked();
+
 private:
+
     Ui::CPclient *ui;
 };
 

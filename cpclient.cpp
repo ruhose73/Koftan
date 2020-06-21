@@ -7,18 +7,18 @@ CPclient::CPclient(QWidget *parent) :
     ui(new Ui::CPclient)
 {
     ui->setupUi(this);
+
     QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
-    QRegExp ipRegex ("^" + ipRange
-                     + "\\." + ipRange
-                     + "\\." + ipRange
-                     + "\\." + ipRange + "$");
+    QRegExp ipRegex ("^" + ipRange + "\\." + ipRange + "\\." + ipRange + "\\." + ipRange + "$");
     QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
-    /* Устанавливаем Валидатор на QLineEdit */
     ui->IPline->setValidator(ipValidator);
 
     socket = new QTcpSocket(this);
     connect(socket,SIGNAL(readyRead()),this,SLOT(sockReady()));
     connect(socket,SIGNAL(disconnected()),this,SLOT(sockDisc()));
+
+
+
 }
 
 CPclient::~CPclient()
@@ -33,7 +33,6 @@ CPclient::~CPclient()
 
 void CPclient::on_Connection_Button_clicked()
 {
-
     qstr_ipaddres = ui->IPline->text();
     socket->connectToHost(qstr_ipaddres,49100);
 }
@@ -47,15 +46,16 @@ void CPclient::sockReady()
 {
         socket->waitForConnected(500);
         socket->waitForReadyRead(500);
-        Data = socket->readAll();
-        doc = QJsonDocument::fromJson(Data,&docError);
-        qDebug()<<Data;
+        qba_Data = socket->readAll();
+        qjd_doc = QJsonDocument::fromJson(qba_Data,&qjpe_docError);
 
-        if(docError.errorString().toInt()==QJsonParseError::NoError)
+        qDebug()<<qba_Data;
+
+        if(qjpe_docError.errorString().toInt()==QJsonParseError::NoError)
         {
-            if(doc.object().value("type").toString()=="connect")
+            if(qjd_doc.object().value("type").toString()=="connect")
             {
-                if(doc.object().value("value").toString()=="true")
+                if(qjd_doc.object().value("value").toString()=="true")
                 {
                     qDebug()<<("Соединение успешно");
                     ui->statusline->clear();
@@ -64,16 +64,16 @@ void CPclient::sockReady()
                 }
                 else
                 {
-                    qDebug()<<("Соединение не успешно");
+                    qWarning("Соединение не успешно");
                     ui->statusline->clear();
                     ui->statusline->setText("Соединение не успешно");
                     bl_conStatus = false;
                 }
             }
-            else if(doc.object().value("type").toString()=="status")
+            else if(qjd_doc.object().value("type").toString()=="status")
             {
 
-                if(doc.object().value("value").toString()=="true")
+                if(qjd_doc.object().value("value").toString()=="true")
                 {
                     qDebug()<<("Авторизация успешна");
                     ui->statusline->clear();
@@ -85,7 +85,7 @@ void CPclient::sockReady()
                 }
                 else
                 {
-                    qDebug()<<("Авторизация не успешна");
+                    qWarning("Авторизация не успешна");
                     ui->statusline->clear();
                     ui->statusline->setText("Авторизация не успешна");
                     ui->passwordline->clear();
@@ -94,47 +94,31 @@ void CPclient::sockReady()
                     bl_logStatus = false;
                 }
             }
-            else if(doc.object().value("type").toString() == "resultSelect")
+            else if(qjd_doc.object().value("type").toString() == "resultSelect")
             {
-                            qDebug() << "Получено: "<< Data.size() << " Всего: " << requireSize;
-                            if(Data.size() == requireSize)
+                            qDebug() << "Получено: "<< qba_Data.size() << " Всего: " << int_requireSize;
+                            if(qba_Data.size() == int_requireSize)
                             {
                                 QStandardItemModel* model = new QStandardItemModel(nullptr);
                                 model->setHorizontalHeaderLabels(QStringList() << "ID"
                                 << "Название" << "МО" << "МВ" << "ПФ" << "ТР" << "А"
                                 << "Э" << "ВОР" << "ДЗ"<< "ОСБ"<< "РЗ"<< "ЦЗ"<< "НИ"<< "РС");
 
-                                QJsonArray docAr = doc.object().value("ID").toArray();
-                                qDebug() <<docAr;
-                                QJsonArray docAr2 = doc.object().value("Name").toArray();
-                                qDebug() <<docAr2;
-                                QJsonArray docAr3 = doc.object().value("ACBM").toArray();
-                                qDebug() <<docAr3;
-                                QJsonArray docAr4 = doc.object().value("RM").toArray();
-                                qDebug() <<docAr4;
-                                QJsonArray docAr5 = doc.object().value("CPSFP").toArray();
-                                qDebug() <<docAr5;
-                                QJsonArray docAr6 = doc.object().value("TC").toArray();
-                                qDebug() <<docAr6;
-                                QJsonArray docAr7 = doc.object().value("D").toArray();
-                                qDebug() <<docAr7;
-                                QJsonArray docAr8 = doc.object().value("PER").toArray();
-                                qDebug() << docAr8;
-                                QJsonArray docAr9 = doc.object().value("RLMW").toArray();
-                                qDebug() << docAr9;
-
-                                QJsonArray docAr10 = doc.object().value("AEW").toArray();
-                                qDebug() << docAr10;
-                                QJsonArray docAr11 = doc.object().value("DIB").toArray();
-                                qDebug() << docAr11;
-                                QJsonArray docAr12 = doc.object().value("PE").toArray();
-                                qDebug() << docAr12;
-                                QJsonArray docAr13 = doc.object().value("WC").toArray();
-                                qDebug() << docAr13;
-                                QJsonArray docAr14 = doc.object().value("NPC").toArray();
-                                qDebug() << docAr14;
-                                QJsonArray docAr15 = doc.object().value("DC").toArray();
-                                qDebug() << docAr15;
+                                QJsonArray docAr = qjd_doc.object().value("ID").toArray();
+                                QJsonArray docAr2 = qjd_doc.object().value("Name").toArray();
+                                QJsonArray docAr3 = qjd_doc.object().value("ACBM").toArray();
+                                QJsonArray docAr4 = qjd_doc.object().value("RM").toArray();
+                                QJsonArray docAr5 = qjd_doc.object().value("CPSFP").toArray();
+                                QJsonArray docAr6 = qjd_doc.object().value("TC").toArray();
+                                QJsonArray docAr7 = qjd_doc.object().value("D").toArray();
+                                QJsonArray docAr8 = qjd_doc.object().value("PER").toArray();
+                                QJsonArray docAr9 = qjd_doc.object().value("RLMW").toArray();
+                                QJsonArray docAr10 = qjd_doc.object().value("AEW").toArray();
+                                QJsonArray docAr11 = qjd_doc.object().value("DIB").toArray();
+                                QJsonArray docAr12 = qjd_doc.object().value("PE").toArray();
+                                QJsonArray docAr13 = qjd_doc.object().value("WC").toArray();
+                                QJsonArray docAr14 = qjd_doc.object().value("NPC").toArray();
+                                QJsonArray docAr15 = qjd_doc.object().value("DC").toArray();
 
                                 for(int i =0; i<docAr.count(); i++)
                                 {
@@ -177,15 +161,15 @@ void CPclient::sockReady()
                             }
                         }
 
-            else if((doc.object().value("type").toString() == "size") && (doc.object().value("resp").toString() == "workers"))
+            else if((qjd_doc.object().value("type").toString() == "size") && (qjd_doc.object().value("resp").toString() == "workers"))
             {
-                requireSize = doc.object().value("length").toInt();
+                int_requireSize = qjd_doc.object().value("length").toInt();
 
-                ui->statusline->setText("Размер: " + QString::number(requireSize) + " байт");
+                ui->statusline->setText("Размер: " + QString::number(int_requireSize) + " байт");
 
                 socket->write("{\"type\":\"select\",\"params\":\"workers\"}");
                 socket->waitForBytesWritten(500);
-                qDebug()<<requireSize;
+                qDebug()<<int_requireSize;
             }
         }
 }
@@ -272,4 +256,36 @@ void CPclient::on_CalcButton_clicked()
 {
     Calc *calc = new Calc;
     calc->show();
+}
+
+void CPclient::on_chooseDB_button_clicked()
+{
+    qstr_PathDB = QFileDialog::getOpenFileName(this, "Укажите файл базы данных", "", "Database (*db)");
+
+    QFile PathfileJson("LocalConfig.json");
+
+    PathfileJson.open(QIODevice::WriteOnly);
+    QVariantMap testMap;
+    testMap.insert("path",qstr_PathDB);
+    PathfileJson.write(QJsonDocument(QJsonObject::fromVariantMap(testMap)).toJson());
+    PathfileJson.close();
+
+
+
+
+
+
+
+//    QFile Pathfile("LocalConfig.txt");
+//    qDebug()<<qstr_PathDB;
+//    if (Pathfile.open(QIODevice::WriteOnly))
+//    {
+//        QTextStream write(&Pathfile);
+//        write << qstr_PathDB;
+//    }
+//    else
+//    {
+//        qWarning("Could not open file");
+//    }
+//    Pathfile.close();
 }

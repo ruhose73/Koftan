@@ -1,30 +1,33 @@
 //Класс создания и работы с readme файлом(формат Markdown Documentation)
 // Created by Mihail on 29.03.2020.
-
 #ifndef TIME_TO_CODING_README_FILE_H
 #define TIME_TO_CODING_README_FILE_H
 #include <fstream>
-#include <iostream>
+#include <QDebug>
 
 using namespace std;
 
-class readme_file_class {
+class readme_file_class
+{
 public:
-    readme_file_class() {
-        cout << "Работа с файлом readme.md" << endl;
+    readme_file_class()
+    {
+        qDebug()<< "Работа с файлом readme.md";
         ofstream readme;    // создаем объект класса ifstream
         readme.open("readme.md");  // Создаем и открываем файл
         //если открыт файл,то:
-        if (readme.is_open()) {
-            cout << "Файл создан и открыт" << endl;
+        if (readme.is_open())
+        {
+            qDebug()<< "Файл создан и открыт";
             readme << "<h3>Автоматически созданный файл README </h3>" << endl;
             readme << "<hr>" << endl;
             readme.close(); //закрываем существующий файл
         }
-            //если файла нет, то создаем и открываем
-        else {
-            cout << "\nОШИБКА!!! : " << endl;
-            cout << "\nНет файла readme.md : " << endl;
+        //если файла нет, то создаем и открываем
+        else
+        {
+            qDebug()<< "\nОШИБКА!!! : ";
+            qDebug()<< "\nНет файла readme.md : ";
             readme.open("readme.md");
             readme << "<h3>Автоматически созданный файл README </h3>" << endl;
             readme << "<hr>" << endl;
@@ -33,10 +36,11 @@ public:
 
     }
 
-    void writefile() {
+    void writefile()
+    {
         ofstream readme;    // создаем объект класса ifstream
         readme.open("readme.md", ios_base::app);
-        cout << "Запись в файл readme.md" << endl;
+        qDebug()<< "Запись в файл readme.md";
         readme << "<h5>Последняя версия: 1.0.</h5>" << endl;
         readme << "Последнюю версию можно получить по почте ruhose73@gmail.com" << endl;
         readme << "<hr>" << endl;

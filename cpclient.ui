@@ -267,7 +267,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
@@ -277,9 +277,9 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>100</y>
+         <y>40</y>
          <width>200</width>
-         <height>35</height>
+         <height>23</height>
         </rect>
        </property>
        <property name="minimumSize">
@@ -295,16 +295,15 @@
         </size>
        </property>
        <property name="text">
-        <string>Получить  данные таблицы
-с сервера</string>
+        <string>Получить  данные таблицы</string>
        </property>
       </widget>
       <widget class="QPushButton" name="CalcButton">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>140</y>
-         <width>201</width>
+         <y>70</y>
+         <width>200</width>
          <height>23</height>
         </rect>
        </property>
@@ -387,11 +386,11 @@
        <property name="title">
         <string>База данных</string>
        </property>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="chooseDB_button">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>20</y>
+          <y>30</y>
           <width>181</width>
           <height>23</height>
          </rect>
@@ -410,8 +409,8 @@
          </rect>
         </property>
         <property name="text">
-         <string>Писать копию в локальную 
-базу</string>
+         <string>Писать копию сессии в 
+локальную базу</string>
         </property>
        </widget>
       </widget>
