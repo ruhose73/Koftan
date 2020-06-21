@@ -213,8 +213,10 @@ void Calc::on_TC_total_but_clicked()
     fl_TC_unitProfit = (fl_TC_costDistrib - fl_TC_unitCost);
     ui->TC_unitProfit_line->setText(QString::number(fl_TC_unitProfit, 'f', 5));
     fl_TC_total = 0;
+
+    //fl_TC_unitProfit = (fl_TC_costDistrib - fl_TC_unitCost);
+    //ui->TC_unitProfit_line->setText(QString("%1").arg(fl_TC_unitProfit));
+    //fl_TC_total = 0;
 }
 
-//fl_TC_unitProfit = (fl_TC_costDistrib - fl_TC_unitCost);
-//ui->TC_unitProfit_line->setText(QString("%1").arg(fl_TC_unitProfit));
-//fl_TC_total = 0;
+

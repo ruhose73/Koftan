@@ -277,9 +277,9 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
+         <y>100</y>
          <width>200</width>
-         <height>23</height>
+         <height>35</height>
         </rect>
        </property>
        <property name="minimumSize">
@@ -291,18 +291,19 @@
        <property name="maximumSize">
         <size>
          <width>200</width>
-         <height>24</height>
+         <height>35</height>
         </size>
        </property>
        <property name="text">
-        <string>Получить  данные таблицы</string>
+        <string>Получить  данные таблицы
+с сервера</string>
        </property>
       </widget>
       <widget class="QPushButton" name="CalcButton">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>40</y>
+         <y>140</y>
          <width>201</width>
          <height>23</height>
         </rect>
@@ -310,6 +311,26 @@
        <property name="text">
         <string>Расчет значений</string>
        </property>
+      </widget>
+      <widget class="QComboBox" name="DB_table_Box">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>201</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Предприятие</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Предприятие (подробно)</string>
+        </property>
+       </item>
       </widget>
      </widget>
      <widget class="QWidget" name="tab">
@@ -351,6 +372,46 @@
         </property>
         <property name="text">
          <string>Темная тема приложения</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>200</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>База данных</string>
+       </property>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>20</y>
+          <width>181</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Указать локальную базу данных</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>181</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Писать копию в локальную 
+базу</string>
         </property>
        </widget>
       </widget>

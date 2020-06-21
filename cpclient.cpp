@@ -34,8 +34,8 @@ CPclient::~CPclient()
 void CPclient::on_Connection_Button_clicked()
 {
 
-    QString ipaddres = ui->IPline->text();
-    socket->connectToHost(ipaddres,49100);
+    qstr_ipaddres = ui->IPline->text();
+    socket->connectToHost(qstr_ipaddres,49100);
 }
 
 void CPclient::sockDisc()
@@ -60,12 +60,14 @@ void CPclient::sockReady()
                     qDebug()<<("Соединение успешно");
                     ui->statusline->clear();
                     ui->statusline->setText("Соединение успешно");
+                    bl_conStatus = true;
                 }
                 else
                 {
                     qDebug()<<("Соединение не успешно");
                     ui->statusline->clear();
                     ui->statusline->setText("Соединение не успешно");
+                    bl_conStatus = false;
                 }
             }
             else if(doc.object().value("type").toString()=="status")
@@ -79,7 +81,7 @@ void CPclient::sockReady()
                     ui->passwordline->clear();
                     ui->loginline->clear();
                     QMessageBox::information(this,"Информация","Авторизация успешна");
-                    status = true;
+                    bl_logStatus = true;
                 }
                 else
                 {
@@ -89,7 +91,7 @@ void CPclient::sockReady()
                     ui->passwordline->clear();
                     ui->loginline->clear();
                     QMessageBox::information(this,"Информация","Неверный пароль или логин");
-                    status = false;
+                    bl_logStatus = false;
                 }
             }
             else if(doc.object().value("type").toString() == "resultSelect")
@@ -98,8 +100,6 @@ void CPclient::sockReady()
                             if(Data.size() == requireSize)
                             {
                                 QStandardItemModel* model = new QStandardItemModel(nullptr);
-
-
                                 model->setHorizontalHeaderLabels(QStringList() << "ID"
                                 << "Название" << "МО" << "МВ" << "ПФ" << "ТР" << "А"
                                 << "Э" << "ВОР" << "ДЗ"<< "ОСБ"<< "РЗ"<< "ЦЗ"<< "НИ"<< "РС");
@@ -192,12 +192,19 @@ void CPclient::sockReady()
 
 void CPclient::on_LoginButton_clicked()
 {
-    QString login = ui->loginline->text();//берем введенный логин
-    QString password = ui->passwordline->text();//берем введенный пароль
-    QByteArray passlog;
-    passlog.append("{\"type\":\"auth\",\"login\":\""+login+"\",\"password\":\""+password+"\"}");
-    socket->write(passlog);
+    if(bl_conStatus == true)
+    {
+    qstr_login = ui->loginline->text();//берем введенный логин
+    qstr_password = ui->passwordline->text();//берем введенный пароль
+    QByteArray qba_passlog;
+    qba_passlog.append("{\"type\":\"auth\",\"login\":\""+qstr_login+"\",\"password\":\""+qstr_password+"\"}");
+    socket->write(qba_passlog);
     socket->waitForBytesWritten(1000);
+    }
+    else
+    {
+        QMessageBox::information(this,"Информация","Нет соединения с сервером");
+    }
 }
 
 void CPclient::on_checkBox_stateChanged(int arg1)
@@ -234,16 +241,24 @@ void CPclient::on_checkBox_stateChanged(int arg1)
 
 void CPclient::on_pushButton_clicked()
 {
-    if(status == true)
+    QString tablename = ui->DB_table_Box->currentText();
+    if(bl_logStatus == true)
     {
-        if(socket->isOpen())
+        if(tablename == "Предприятие")
         {
-            socket->write("{\"type\":\"recSize\",\"resp\":\"workers\"}");
-            socket->waitForBytesWritten(500);
+            if((socket->isOpen()) && (bl_conStatus == true))
+            {
+                socket->write("{\"type\":\"recSize\",\"resp\":\"workers\"}");
+                socket->waitForBytesWritten(500);
+            }
+            else
+            {
+                QMessageBox::information(this,"Информация","Нет соединения с сервером");
+            }
         }
         else
         {
-            QMessageBox::information(this,"Информация","Нет соединения с сервером");
+            QMessageBox::information(this,"Информация","Таблица еще не заполнена");
         }
     }
     else

@@ -12,6 +12,7 @@
 #include <QStyle>
 #include <QStandardItem>
 #include <QJsonArray>
+#include <QFileDialog>
 
 #include "calc.h"
 
@@ -28,16 +29,23 @@ public:
     ~CPclient();
 
     QTcpSocket* socket;
+
+//    QJsonDocument doc;
+//    QJsonParseError docError;
+//    bool status = NULL;
+//    int requireSize;
+
+private:
+    QString qstr_ipaddres;
+    QString qstr_login;
+    QString qstr_password;
     QByteArray Data;
-    QString ipaddres;
-    QString login;
-    QString password;
-    quint16 port;
+
     QJsonDocument doc;
     QJsonParseError docError;
-    bool status = NULL;
+    bool bl_logStatus = NULL;
+    bool bl_conStatus = NULL;
     int requireSize;
-
 
 
 public slots:
