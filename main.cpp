@@ -7,12 +7,12 @@
 
 int main(int argc, char *argv[])
 {
-   QApplication a(argc, argv);
+    QApplication a(argc, argv);
 
-   qApp->setStyle(QStyleFactory::create("Fusion"));
-   readme_file_class readme;
-   readme.writefile();
-   CPclient client;
-   client.show();
-   return a.exec();
+    qApp->setStyle(QStyleFactory::create("Fusion"));
+    readme_file_class readme;
+    readme.writefile();
+    CPclient client;
+    client.show();
+    return a.exec();
 }

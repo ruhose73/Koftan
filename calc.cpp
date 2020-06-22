@@ -23,6 +23,37 @@ void Calc::on_DC_total_but_clicked()
     QString qstr_DC_advertising = ui->DC_advertising_line->text();
     QString qstr_DC_entertainment = ui->DC_entertainment_line->text();
 
+//        QSqlQuery* query = new  QSqlQuery(db);
+
+//        QString fio = doc.object().value("name").toString();
+//        QString cType =  doc.object().value("conType").toString();
+//        QString position =  doc.object().value("position").toString();
+//        QString wexp =  doc.object().value("wexp").toString();
+//        QString pasport =  doc.object().value("pasport").toString();
+//        QString insurance =  doc.object().value("insurance").toString();
+//        QString pension =  doc.object().value("pension").toString();
+//        QString card =  doc.object().value("card").toString();
+//        QString phone = doc.object().value("phone").toString();
+
+//        query->prepare("INSERT INTO workers(FIO, \"Contract Type\", \"Position\", \"Work Experience\", Pasport, Insurance, Pension, Card, Phone) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);");
+
+//        query->addBindValue(fio.toUtf8());
+//        query->addBindValue(cType.toUtf8());
+//        query->addBindValue(position.toUtf8());
+//        query->addBindValue(wexp.toUtf8());
+//        query->addBindValue(pasport.toInt());
+//        query->addBindValue(insurance.toInt());
+//        query->addBindValue(pension.toInt());
+//        query->addBindValue(card.toInt());
+//        query->addBindValue(phone.toInt());
+
+//        if(!query->exec())
+//        {
+//            qDebug() << "Ошибка добавления записи";
+//        }
+
+
+
     //если придется передавать в string вормате, то float оставим для
     //возможности считать локально
 

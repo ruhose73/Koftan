@@ -32,9 +32,9 @@ public:
 
     ~CPclient();
 
-    QTcpSocket* socket;
-
 private:
+
+    QTcpSocket* socket;
 
     QString qstr_ipaddres;
 
@@ -53,7 +53,7 @@ private:
 
     bool bl_conStatus = NULL;
 
-    bool bl_localBase = NULL;
+    bool bl_localBase = true;
 
     int int_requireSize;
 
@@ -61,11 +61,6 @@ private:
 
     QSqlDatabase LocalDataBase;
     QSqlQuery LocalSqlQuery;
-
-
-
-
-
 
 
 public slots:

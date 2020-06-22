@@ -16,8 +16,8 @@ CPclient::CPclient(QWidget *parent) :
     socket = new QTcpSocket(this);
     connect(socket,SIGNAL(readyRead()),this,SLOT(sockReady()));
     connect(socket,SIGNAL(disconnected()),this,SLOT(sockDisc()));
-    QFile PathfileJson("LocalConfig.json");
 
+    QFile PathfileJson("LocalConfig.json");
     if (PathfileJson.open(QIODevice::ReadOnly))
     {
         QByteArray qba_PathDB = PathfileJson.readAll();
@@ -32,7 +32,6 @@ CPclient::CPclient(QWidget *parent) :
     LocalDataBase = QSqlDatabase::addDatabase("QSQLITE");
     LocalDataBase.setDatabaseName(qstr_PathDB);
     LocalSqlQuery = QSqlQuery(LocalDataBase);
-
     if(LocalDataBase.open())
     {
         for(const QString &tablename : LocalDataBase.tables())
@@ -42,7 +41,6 @@ CPclient::CPclient(QWidget *parent) :
     {
         qDebug()<<"BD didn't open";
     }
-
 }
 
 CPclient::~CPclient()
@@ -279,19 +277,29 @@ void CPclient::on_pushButton_clicked()
             }
             else
             {
-                QMessageBox::information(this,"Информация","Нет соединения с сервером\nОткрывается локальная база данных");
+                QMessageBox::information(this,"Информация","Открывается локальная база данных");
 
                 QSqlTableModel *modal = new QSqlTableModel;
                 modal->setTable("concern");
                 modal->select();
                 ui->tableView->setModel(modal);
             }
-
         }
         else
-        {
-            QMessageBox::information(this,"Информация","Таблица еще не заполнена");
-        }
+            if((socket->isOpen()) && (bl_conStatus == true))
+            {
+                QMessageBox::information(this,"Информация","Таблица еще не попала на сервер");
+                //socket->write("{\"type\":\"recSize\",\"resp\":\"workers1\"}");
+                //socket->waitForBytesWritten(500);
+            }
+            else
+            {
+                QMessageBox::information(this,"Информация","Открывается локальная база данных");
+                QSqlTableModel *modal = new QSqlTableModel;
+                modal->setTable("concernDetail");
+                modal->select();
+                ui->tableView->setModel(modal);
+            }
     }
     else
     {
@@ -316,7 +324,6 @@ void CPclient::on_chooseDB_button_clicked()
     testMap.insert("path",qstr_PathDB);
     PathfileJson.write(QJsonDocument(QJsonObject::fromVariantMap(testMap)).toJson());
     PathfileJson.close();
-
 }
 
 void CPclient::on_WriteCopyDB_box_stateChanged(int arg1)
@@ -324,7 +331,11 @@ void CPclient::on_WriteCopyDB_box_stateChanged(int arg1)
 
     if(arg1 == 2)
     {
-
+        bl_localBase = true;
+    }
+    else
+    {
+        bl_localBase = false;
     }
 
 }
