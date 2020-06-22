@@ -1,0 +1,30 @@
+#include "settingsfilejson.h"
+
+SettingsFile::SettingsFile(){}
+
+void SettingsFile::writePathLocalDB(QString qstr_SFJ_PathDB)
+{
+    qstr_PathDB = qstr_SFJ_PathDB;
+    
+    QFile Settingsfile("LocalConfig.json");
+        if (Settingsfile.open(QIODevice::WriteOnly))
+        {
+            QTextStream write(&Settingsfile);
+            write << qstr_PathDB;
+        }
+        else
+        {
+            qWarning("Could not open file");
+        }
+    
+    
+    
+    Settingsfile.close();
+}
+void SettingsFile::writeStatusLocalDB()
+{
+    QFile PathfileJson("LocalConfig.txt");
+    PathfileJson.open(QIODevice::WriteOnly|QIODevice::Append);
+
+    PathfileJson.close();
+}

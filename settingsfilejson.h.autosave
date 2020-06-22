@@ -1,0 +1,17 @@
+#ifndef SETTINGSFILEJSON_H
+#define SETTINGSFILEJSON_H
+
+#include <QFile>
+
+class SettingsFile
+{
+public:
+    SettingsFile();
+    void writePathLocalDB(QString qstr_SFJ_PathDB);
+    void writeStatusLocalDB();
+    
+private:
+    QString qstr_PathDB;
+};
+
+#endif // SETTINGSFILEJSON_H

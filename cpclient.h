@@ -14,6 +14,8 @@
 #include <QJsonArray>
 #include <QFileDialog>
 #include <QFile>
+#include <QtSql>
+#include <QSqlQuery>
 #include "calc.h"
 
 namespace Ui {
@@ -57,6 +59,15 @@ private:
 
     QString qstr_PathDB;
 
+    QSqlDatabase LocalDataBase;
+    QSqlQuery LocalSqlQuery;
+
+
+
+
+
+
+
 public slots:
 
     void sockReady();
@@ -76,6 +87,8 @@ private slots:
     void on_CalcButton_clicked();
 
     void on_chooseDB_button_clicked();
+
+    void on_WriteCopyDB_box_stateChanged(int arg1);
 
 private:
 

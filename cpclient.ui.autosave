@@ -267,7 +267,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
@@ -277,7 +277,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
+         <y>40</y>
          <width>200</width>
          <height>23</height>
         </rect>
@@ -291,12 +291,45 @@
        <property name="maximumSize">
         <size>
          <width>200</width>
-         <height>24</height>
+         <height>35</height>
         </size>
        </property>
        <property name="text">
-        <string>Получить данные </string>
+        <string>Получить  данные таблицы</string>
        </property>
+      </widget>
+      <widget class="QPushButton" name="CalcButton">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>200</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Расчет значений</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="DB_table_Box">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>201</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Предприятие</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Предприятие (подробно)</string>
+        </property>
+       </item>
       </widget>
      </widget>
      <widget class="QWidget" name="tab">
@@ -338,6 +371,46 @@
         </property>
         <property name="text">
          <string>Темная тема приложения</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>200</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>База данных</string>
+       </property>
+       <widget class="QPushButton" name="chooseDB_button">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>181</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Указать локальную базу данных</string>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="WriteCopyDB_box">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>181</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Писать копию сессии в 
+локальную базу</string>
         </property>
        </widget>
       </widget>
@@ -395,6 +468,20 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>IPline</tabstop>
+  <tabstop>Connection_Button</tabstop>
+  <tabstop>loginline</tabstop>
+  <tabstop>passwordline</tabstop>
+  <tabstop>LoginButton</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>CalcButton</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>textBrowser</tabstop>
+  <tabstop>tableView</tabstop>
+  <tabstop>statusline</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

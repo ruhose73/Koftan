@@ -16,8 +16,31 @@ CPclient::CPclient(QWidget *parent) :
     socket = new QTcpSocket(this);
     connect(socket,SIGNAL(readyRead()),this,SLOT(sockReady()));
     connect(socket,SIGNAL(disconnected()),this,SLOT(sockDisc()));
+    
+    QFile PathfileJson("LocalConfig.json");
+    if (PathfileJson.open(QIODevice::ReadOnly))
+    {
+        QByteArray qba_PathDB = PathfileJson.readAll();
+        QJsonDocument qjd_PathDB(QJsonDocument::fromJson(qba_PathDB));
+        qstr_PathDB = qjd_PathDB.object().value("path").toString();
+    }
+    else
+    {
+        qDebug()<<"Файл не открыт";
+    }
 
-
+    LocalDataBase = QSqlDatabase::addDatabase("QSQLITE");
+    LocalDataBase.setDatabaseName(qstr_PathDB);
+    LocalSqlQuery = QSqlQuery(LocalDataBase);  
+    if(LocalDataBase.open())
+    {
+        for(const QString &tablename : LocalDataBase.tables())
+            qDebug()<<tablename;
+    }
+    else
+    {
+        qDebug()<<"BD didn't open";
+    }
 
 }
 
@@ -44,150 +67,168 @@ void CPclient::sockDisc()
 
 void CPclient::sockReady()
 {
-        socket->waitForConnected(500);
-        socket->waitForReadyRead(500);
-        qba_Data = socket->readAll();
-        qjd_doc = QJsonDocument::fromJson(qba_Data,&qjpe_docError);
+    socket->waitForConnected(500);
+    socket->waitForReadyRead(500);
+    qba_Data = socket->readAll();
+    qjd_doc = QJsonDocument::fromJson(qba_Data,&qjpe_docError);
 
-        qDebug()<<qba_Data;
+    qDebug()<<qba_Data;
 
-        if(qjpe_docError.errorString().toInt()==QJsonParseError::NoError)
+    if(qjpe_docError.errorString().toInt()==QJsonParseError::NoError)
+    {
+        if(qjd_doc.object().value("type").toString()=="connect")
         {
-            if(qjd_doc.object().value("type").toString()=="connect")
+            if(qjd_doc.object().value("value").toString()=="true")
             {
-                if(qjd_doc.object().value("value").toString()=="true")
-                {
-                    qDebug()<<("Соединение успешно");
-                    ui->statusline->clear();
-                    ui->statusline->setText("Соединение успешно");
-                    bl_conStatus = true;
-                }
-                else
-                {
-                    qWarning("Соединение не успешно");
-                    ui->statusline->clear();
-                    ui->statusline->setText("Соединение не успешно");
-                    bl_conStatus = false;
-                }
+                qDebug()<<("Соединение успешно");
+                ui->statusline->clear();
+                ui->statusline->setText("Соединение успешно");
+                bl_conStatus = true;
             }
-            else if(qjd_doc.object().value("type").toString()=="status")
+            else
             {
-
-                if(qjd_doc.object().value("value").toString()=="true")
-                {
-                    qDebug()<<("Авторизация успешна");
-                    ui->statusline->clear();
-                    ui->statusline->setText("Авторизация успешна");
-                    ui->passwordline->clear();
-                    ui->loginline->clear();
-                    QMessageBox::information(this,"Информация","Авторизация успешна");
-                    bl_logStatus = true;
-                }
-                else
-                {
-                    qWarning("Авторизация не успешна");
-                    ui->statusline->clear();
-                    ui->statusline->setText("Авторизация не успешна");
-                    ui->passwordline->clear();
-                    ui->loginline->clear();
-                    QMessageBox::information(this,"Информация","Неверный пароль или логин");
-                    bl_logStatus = false;
-                }
-            }
-            else if(qjd_doc.object().value("type").toString() == "resultSelect")
-            {
-                            qDebug() << "Получено: "<< qba_Data.size() << " Всего: " << int_requireSize;
-                            if(qba_Data.size() == int_requireSize)
-                            {
-                                QStandardItemModel* model = new QStandardItemModel(nullptr);
-                                model->setHorizontalHeaderLabels(QStringList() << "ID"
-                                << "Название" << "МО" << "МВ" << "ПФ" << "ТР" << "А"
-                                << "Э" << "ВОР" << "ДЗ"<< "ОСБ"<< "РЗ"<< "ЦЗ"<< "НИ"<< "РС");
-
-                                QJsonArray docAr = qjd_doc.object().value("ID").toArray();
-                                QJsonArray docAr2 = qjd_doc.object().value("Name").toArray();
-                                QJsonArray docAr3 = qjd_doc.object().value("ACBM").toArray();
-                                QJsonArray docAr4 = qjd_doc.object().value("RM").toArray();
-                                QJsonArray docAr5 = qjd_doc.object().value("CPSFP").toArray();
-                                QJsonArray docAr6 = qjd_doc.object().value("TC").toArray();
-                                QJsonArray docAr7 = qjd_doc.object().value("D").toArray();
-                                QJsonArray docAr8 = qjd_doc.object().value("PER").toArray();
-                                QJsonArray docAr9 = qjd_doc.object().value("RLMW").toArray();
-                                QJsonArray docAr10 = qjd_doc.object().value("AEW").toArray();
-                                QJsonArray docAr11 = qjd_doc.object().value("DIB").toArray();
-                                QJsonArray docAr12 = qjd_doc.object().value("PE").toArray();
-                                QJsonArray docAr13 = qjd_doc.object().value("WC").toArray();
-                                QJsonArray docAr14 = qjd_doc.object().value("NPC").toArray();
-                                QJsonArray docAr15 = qjd_doc.object().value("DC").toArray();
-
-                                for(int i =0; i<docAr.count(); i++)
-                                {
-                                    QList<QStandardItem*> q_list;
-                                    QStandardItem* col = new QStandardItem(docAr[i].toObject().value("id").toString());
-                                    QStandardItem* col2 = new QStandardItem(docAr2[i].toObject().value("name").toString());
-                                    QStandardItem* col3 = new QStandardItem(docAr3[i].toObject().value("acbm").toString());
-                                    QStandardItem* col4 = new QStandardItem(docAr4[i].toObject().value("rm").toString());
-                                    QStandardItem* col5 = new QStandardItem(docAr5[i].toObject().value("cpsfp").toString());
-                                    QStandardItem* col6 = new QStandardItem(docAr6[i].toObject().value("tc").toString());
-                                    QStandardItem* col7 = new QStandardItem(docAr7[i].toObject().value("d").toString());
-                                    QStandardItem* col8 = new QStandardItem(docAr8[i].toObject().value("per").toString());
-                                    QStandardItem* col9 = new QStandardItem(docAr9[i].toObject().value("rlmw").toString());
-                                    QStandardItem* col10 = new QStandardItem(docAr10[i].toObject().value("aew").toString());
-                                    QStandardItem* col11 = new QStandardItem(docAr11[i].toObject().value("dib").toString());
-                                    QStandardItem* col12 = new QStandardItem(docAr12[i].toObject().value("pe").toString());
-                                    QStandardItem* col13 = new QStandardItem(docAr13[i].toObject().value("wc").toString());
-                                    QStandardItem* col14 = new QStandardItem(docAr14[i].toObject().value("npc").toString());
-                                    QStandardItem* col15 = new QStandardItem(docAr15[i].toObject().value("dc").toString());
-
-                                    q_list << col;
-                                    q_list << col2;
-                                    q_list << col3;
-                                    q_list << col4;
-                                    q_list << col5;
-                                    q_list << col6;
-                                    q_list << col7;
-                                    q_list << col8;
-                                    q_list << col9;
-                                    q_list << col10;
-                                    q_list << col11;
-                                    q_list << col12;
-                                    q_list << col13;
-                                    q_list << col14;
-                                    q_list << col15;
-
-                                    model->appendRow(q_list);
-                                }
-                                ui->tableView->setModel(model);
-                            }
-                        }
-
-            else if((qjd_doc.object().value("type").toString() == "size") && (qjd_doc.object().value("resp").toString() == "workers"))
-            {
-                int_requireSize = qjd_doc.object().value("length").toInt();
-
-                ui->statusline->setText("Размер: " + QString::number(int_requireSize) + " байт");
-
-                socket->write("{\"type\":\"select\",\"params\":\"workers\"}");
-                socket->waitForBytesWritten(500);
-                qDebug()<<int_requireSize;
+                qWarning("Соединение не успешно");
+                ui->statusline->clear();
+                ui->statusline->setText("Соединение не успешно");
+                bl_conStatus = false;
             }
         }
+        else if(qjd_doc.object().value("type").toString()=="status")
+        {
+
+            if(qjd_doc.object().value("value").toString()=="true")
+            {
+                qDebug()<<("Авторизация успешна");
+                ui->statusline->clear();
+                ui->statusline->setText("Авторизация успешна");
+                ui->passwordline->clear();
+                ui->loginline->clear();
+                QMessageBox::information(this,"Информация","Авторизация успешна");
+                bl_logStatus = true;
+            }
+            else
+            {
+                qWarning("Авторизация не успешна");
+                ui->statusline->clear();
+                ui->statusline->setText("Авторизация не успешна");
+                ui->passwordline->clear();
+                ui->loginline->clear();
+                QMessageBox::information(this,"Информация","Неверный пароль или логин");
+                bl_logStatus = false;
+            }
+        }
+        else if(qjd_doc.object().value("type").toString() == "resultSelect")
+        {
+            qDebug() << "Получено: "<< qba_Data.size() << " Всего: " << int_requireSize;
+            if(qba_Data.size() == int_requireSize)
+            {
+                QStandardItemModel* model = new QStandardItemModel(nullptr);
+                model->setHorizontalHeaderLabels(QStringList() << "ID"
+                                                 << "Название" << "МО" << "МВ" << "ПФ" << "ТР" << "А"
+                                                 << "Э" << "ВОР" << "ДЗ"<< "ОСБ"<< "РЗ"<< "ЦЗ"<< "НИ"<< "РС");
+
+                QJsonArray docAr = qjd_doc.object().value("ID").toArray();
+                QJsonArray docAr2 = qjd_doc.object().value("Name").toArray();
+                QJsonArray docAr3 = qjd_doc.object().value("ACBM").toArray();
+                QJsonArray docAr4 = qjd_doc.object().value("RM").toArray();
+                QJsonArray docAr5 = qjd_doc.object().value("CPSFP").toArray();
+                QJsonArray docAr6 = qjd_doc.object().value("TC").toArray();
+                QJsonArray docAr7 = qjd_doc.object().value("D").toArray();
+                QJsonArray docAr8 = qjd_doc.object().value("PER").toArray();
+                QJsonArray docAr9 = qjd_doc.object().value("RLMW").toArray();
+                QJsonArray docAr10 = qjd_doc.object().value("AEW").toArray();
+                QJsonArray docAr11 = qjd_doc.object().value("DIB").toArray();
+                QJsonArray docAr12 = qjd_doc.object().value("PE").toArray();
+                QJsonArray docAr13 = qjd_doc.object().value("WC").toArray();
+                QJsonArray docAr14 = qjd_doc.object().value("NPC").toArray();
+                QJsonArray docAr15 = qjd_doc.object().value("DC").toArray();
+
+                for(int i =0; i<docAr.count(); i++)
+                {
+                    QList<QStandardItem*> q_list;
+                    QStandardItem* col = new QStandardItem(docAr[i].toObject().value("id").toString());
+                    QStandardItem* col2 = new QStandardItem(docAr2[i].toObject().value("name").toString());
+                    QStandardItem* col3 = new QStandardItem(docAr3[i].toObject().value("acbm").toString());
+                    QStandardItem* col4 = new QStandardItem(docAr4[i].toObject().value("rm").toString());
+                    QStandardItem* col5 = new QStandardItem(docAr5[i].toObject().value("cpsfp").toString());
+                    QStandardItem* col6 = new QStandardItem(docAr6[i].toObject().value("tc").toString());
+                    QStandardItem* col7 = new QStandardItem(docAr7[i].toObject().value("d").toString());
+                    QStandardItem* col8 = new QStandardItem(docAr8[i].toObject().value("per").toString());
+                    QStandardItem* col9 = new QStandardItem(docAr9[i].toObject().value("rlmw").toString());
+                    QStandardItem* col10 = new QStandardItem(docAr10[i].toObject().value("aew").toString());
+                    QStandardItem* col11 = new QStandardItem(docAr11[i].toObject().value("dib").toString());
+                    QStandardItem* col12 = new QStandardItem(docAr12[i].toObject().value("pe").toString());
+                    QStandardItem* col13 = new QStandardItem(docAr13[i].toObject().value("wc").toString());
+                    QStandardItem* col14 = new QStandardItem(docAr14[i].toObject().value("npc").toString());
+                    QStandardItem* col15 = new QStandardItem(docAr15[i].toObject().value("dc").toString());
+
+                    q_list << col;
+                    q_list << col2;
+                    q_list << col3;
+                    q_list << col4;
+                    q_list << col5;
+                    q_list << col6;
+                    q_list << col7;
+                    q_list << col8;
+                    q_list << col9;
+                    q_list << col10;
+                    q_list << col11;
+                    q_list << col12;
+                    q_list << col13;
+                    q_list << col14;
+                    q_list << col15;
+
+                    model->appendRow(q_list);
+                }
+                ui->tableView->setModel(model);
+            }
+        }
+
+        else if((qjd_doc.object().value("type").toString() == "size") && (qjd_doc.object().value("resp").toString() == "workers"))
+        {
+            int_requireSize = qjd_doc.object().value("length").toInt();
+
+            ui->statusline->setText("Размер: " + QString::number(int_requireSize) + " байт");
+
+            socket->write("{\"type\":\"select\",\"params\":\"workers\"}");
+            socket->waitForBytesWritten(500);
+            qDebug()<<int_requireSize;
+        }
+    }
 }
 
 void CPclient::on_LoginButton_clicked()
 {
-    if(bl_conStatus == true)
-    {
     qstr_login = ui->loginline->text();//берем введенный логин
     qstr_password = ui->passwordline->text();//берем введенный пароль
-    QByteArray qba_passlog;
-    qba_passlog.append("{\"type\":\"auth\",\"login\":\""+qstr_login+"\",\"password\":\""+qstr_password+"\"}");
-    socket->write(qba_passlog);
-    socket->waitForBytesWritten(1000);
+
+    if(bl_conStatus == true)
+    {
+        QByteArray qba_passlog;
+        qba_passlog.append("{\"type\":\"auth\",\"login\":\""+qstr_login+"\",\"password\":\""+qstr_password+"\"}");
+        socket->write(qba_passlog);
+        socket->waitForBytesWritten(1000);
     }
     else
     {
-        QMessageBox::information(this,"Информация","Нет соединения с сервером");
+        QMessageBox::information(this,"Информация","Локальная авторизация");
+
+        if(LocalSqlQuery.exec("SELECT login, password FROM authlist WHERE login =\'" + qstr_login + "\' AND password =\'" + qstr_password + "\'"))
+        {
+            if(LocalSqlQuery.next())
+            {
+                QMessageBox::information(this,"Информация","Авторизация успешна");
+                ui->statusline->setText("Авторизация успешна");
+                bl_logStatus = true;
+            }
+            else
+            {
+                qDebug() << "Good auth operation.\nAuth failed.";
+                QMessageBox::information(this,"Информация","Авторизация не успешна");
+                ui->statusline->setText("Авторизация не успешна");
+                bl_logStatus = false;
+            }
+        }
     }
 }
 
@@ -237,7 +278,12 @@ void CPclient::on_pushButton_clicked()
             }
             else
             {
-                QMessageBox::information(this,"Информация","Нет соединения с сервером");
+                QMessageBox::information(this,"Информация","Открывается локальная база данных");
+
+                QSqlTableModel *modal = new QSqlTableModel;
+                modal->setTable("concern");
+                modal->select();
+                ui->tableView->setModel(modal);
             }
         }
         else
@@ -263,10 +309,23 @@ void CPclient::on_chooseDB_button_clicked()
     qstr_PathDB = QFileDialog::getOpenFileName(this, "Укажите файл базы данных", "", "Database (*db)");
 
     QFile PathfileJson("LocalConfig.json");
-
     PathfileJson.open(QIODevice::WriteOnly);
     QVariantMap testMap;
     testMap.insert("path",qstr_PathDB);
     PathfileJson.write(QJsonDocument(QJsonObject::fromVariantMap(testMap)).toJson());
     PathfileJson.close();
+}
+
+void CPclient::on_WriteCopyDB_box_stateChanged(int arg1)
+{
+
+    if(arg1 == 2)
+    {
+        bl_localBase = true;
+    }
+    else
+    {
+        bl_localBase = false;
+    }
+
 }
