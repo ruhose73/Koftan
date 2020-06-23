@@ -3,6 +3,8 @@
 
 
 #include <QWidget>
+#include <QtSql>
+#include <QSqlQuery>
 
 namespace Ui {
 class Calc;
@@ -105,6 +107,10 @@ private:
     float fl_TC_percent;
     float fl_TC_costDistrib;
     float fl_TC_unitProfit;
+
+    QString qstr_PathDB;
+
+    QSqlDatabase LocalDataBase;
 
 };
 
