@@ -122,44 +122,191 @@ void CPclient::sockReady()
             if(qba_Data.size() == int_requireSize)
             {
                 QStandardItemModel* model = new QStandardItemModel(nullptr);
-                model->setHorizontalHeaderLabels(QStringList() << "ID"
-                                                 << "Название" << "МО" << "МВ" << "ПФ" << "ТР" << "А"
-                                                 << "Э" << "ВОР" << "ДЗ"<< "ОСБ"<< "РЗ"<< "ЦЗ"<< "НИ"<< "РС");
+                model->setHorizontalHeaderLabels(QStringList() << "NAME"
+                                                 << "DCtotal" << "WCtotal" << "PEtotal" << "AEWtotal" << "PERtotal"
+                                                 << "DTBtotal" << "MATtotal" << "TCunitCost"<< "TCcostDistrib"<< "TCunitProfit");
 
-                QJsonArray docAr = qjd_doc.object().value("ID").toArray();
-                QJsonArray docAr2 = qjd_doc.object().value("Name").toArray();
-                QJsonArray docAr3 = qjd_doc.object().value("ACBM").toArray();
-                QJsonArray docAr4 = qjd_doc.object().value("RM").toArray();
-                QJsonArray docAr5 = qjd_doc.object().value("CPSFP").toArray();
-                QJsonArray docAr6 = qjd_doc.object().value("TC").toArray();
-                QJsonArray docAr7 = qjd_doc.object().value("D").toArray();
-                QJsonArray docAr8 = qjd_doc.object().value("PER").toArray();
-                QJsonArray docAr9 = qjd_doc.object().value("RLMW").toArray();
-                QJsonArray docAr10 = qjd_doc.object().value("AEW").toArray();
-                QJsonArray docAr11 = qjd_doc.object().value("DIB").toArray();
-                QJsonArray docAr12 = qjd_doc.object().value("PE").toArray();
-                QJsonArray docAr13 = qjd_doc.object().value("WC").toArray();
-                QJsonArray docAr14 = qjd_doc.object().value("NPC").toArray();
-                QJsonArray docAr15 = qjd_doc.object().value("DC").toArray();
+                QJsonArray docAr = qjd_doc.object().value("NAME").toArray();
+                QJsonArray docAr2 = qjd_doc.object().value("DCtotal").toArray();
+                QJsonArray docAr3 = qjd_doc.object().value("WCtotal").toArray();
+                QJsonArray docAr4 = qjd_doc.object().value("PEtotal").toArray();
+                QJsonArray docAr5 = qjd_doc.object().value("AEWtotal").toArray();
+                QJsonArray docAr6 = qjd_doc.object().value("PERtotal").toArray();
+                QJsonArray docAr7 = qjd_doc.object().value("DTBtotal").toArray();
+                QJsonArray docAr8 = qjd_doc.object().value("MATtotal").toArray();
+                QJsonArray docAr9 = qjd_doc.object().value("TCunitCost").toArray();
+                QJsonArray docAr10 = qjd_doc.object().value("TCcostDistrib").toArray();
+                QJsonArray docAr11 = qjd_doc.object().value("TCunitProfit").toArray();
 
                 for(int i =0; i<docAr.count(); i++)
                 {
                     QList<QStandardItem*> q_list;
-                    QStandardItem* col = new QStandardItem(docAr[i].toObject().value("id").toString());
-                    QStandardItem* col2 = new QStandardItem(docAr2[i].toObject().value("name").toString());
-                    QStandardItem* col3 = new QStandardItem(docAr3[i].toObject().value("acbm").toString());
-                    QStandardItem* col4 = new QStandardItem(docAr4[i].toObject().value("rm").toString());
-                    QStandardItem* col5 = new QStandardItem(docAr5[i].toObject().value("cpsfp").toString());
-                    QStandardItem* col6 = new QStandardItem(docAr6[i].toObject().value("tc").toString());
-                    QStandardItem* col7 = new QStandardItem(docAr7[i].toObject().value("d").toString());
-                    QStandardItem* col8 = new QStandardItem(docAr8[i].toObject().value("per").toString());
-                    QStandardItem* col9 = new QStandardItem(docAr9[i].toObject().value("rlmw").toString());
-                    QStandardItem* col10 = new QStandardItem(docAr10[i].toObject().value("aew").toString());
-                    QStandardItem* col11 = new QStandardItem(docAr11[i].toObject().value("dib").toString());
-                    QStandardItem* col12 = new QStandardItem(docAr12[i].toObject().value("pe").toString());
-                    QStandardItem* col13 = new QStandardItem(docAr13[i].toObject().value("wc").toString());
-                    QStandardItem* col14 = new QStandardItem(docAr14[i].toObject().value("npc").toString());
-                    QStandardItem* col15 = new QStandardItem(docAr15[i].toObject().value("dc").toString());
+                    QStandardItem* col = new QStandardItem(docAr[i].toObject().value("name").toString());
+                    QStandardItem* col2 = new QStandardItem(docAr2[i].toObject().value("dctotal").toString());
+                    QStandardItem* col3 = new QStandardItem(docAr3[i].toObject().value("wctotal").toString());
+                    QStandardItem* col4 = new QStandardItem(docAr4[i].toObject().value("petotal").toString());
+                    QStandardItem* col5 = new QStandardItem(docAr5[i].toObject().value("aewtotal").toString());
+                    QStandardItem* col6 = new QStandardItem(docAr6[i].toObject().value("pertotal").toString());
+                    QStandardItem* col7 = new QStandardItem(docAr7[i].toObject().value("dtbtotal").toString());
+                    QStandardItem* col8 = new QStandardItem(docAr8[i].toObject().value("mattotal").toString());
+                    QStandardItem* col9 = new QStandardItem(docAr9[i].toObject().value("tcunitcost").toString());
+                    QStandardItem* col10 = new QStandardItem(docAr10[i].toObject().value("tccostdistrib").toString());
+                    QStandardItem* col11 = new QStandardItem(docAr11[i].toObject().value("tcunitprofit").toString());
+
+                    q_list << col;
+                    q_list << col2;
+                    q_list << col3;
+                    q_list << col4;
+                    q_list << col5;
+                    q_list << col6;
+                    q_list << col7;
+                    q_list << col8;
+                    q_list << col9;
+                    q_list << col10;
+                    q_list << col11;
+
+                    model->appendRow(q_list);
+                }
+
+                ui->tableView->setModel(model);
+            }
+        }
+
+        else if(qjd_doc.object().value("type").toString() == "resultSelect1")
+        {
+            qDebug() << "Получено: "<< qba_Data.size() << " Всего: " << int_requireSize;
+            if(qba_Data.size() == int_requireSize)
+            {
+                QStandardItemModel* model = new QStandardItemModel(nullptr);
+                model->setHorizontalHeaderLabels(QStringList() << "NAME"
+                                                 << "DCpackaging" << "DCdelivery" << "DCloading" << "DCfeels" << "DCstorageRoom"
+                                                 << "DCadvertising" << "DCentertainment" << "DCtotal"
+                                                 << "NPCplain"<< "NPCdevProd"
+                                                 << "NPCdamProp"<< "NPCforfeits"
+                                                 << "NPClossMat"<< "NPCtotal"
+                                                 << "WCdeprecation"<< "WCheating"
+                                                 << "WCdeductionWage"<< "WCdeductionSalary"
+                                                 << "WCtotal"<< "PEsfProducts"<< "PEprimProd"
+                                                 << "PEauxiliaryProd"<< "PEoverheadCosts"
+                                                 << "PEmarriage"<< "PEprodService"
+                                                 << "PEtotal"<< "AEWadditIncome"
+                                                 << "AEWaddEarning"<< "AEWtotal"
+                                                 << "PERheating"<< "PERwater"
+                                                 << "PERelectricity"<< "PERtotal"
+                                                 << "DTBinsurance"<< "DTBdepreciation"
+                                                 << "DTBtotal"<< "MATmainMat"
+                                                 << "MATcostSf"<< "MATrelatedMat"
+                                                 << "MATtotal"<< "TCunitCost"
+                                                 << "TCcostDistrib"<< "TCtotal");
+
+                QJsonArray docAr = qjd_doc.object().value("NAME").toArray();
+                QJsonArray docAr2 = qjd_doc.object().value("DCpackaging").toArray();
+                QJsonArray docAr3 = qjd_doc.object().value("DCdelivery").toArray();
+                QJsonArray docAr4 = qjd_doc.object().value("DCloading").toArray();
+                QJsonArray docAr5 = qjd_doc.object().value("DCfeels").toArray();
+                QJsonArray docAr6 = qjd_doc.object().value("DCstorageRoom").toArray();
+                QJsonArray docAr7 = qjd_doc.object().value("DCadvertising").toArray();
+                QJsonArray docAr8 = qjd_doc.object().value("DCentertainment").toArray();
+                QJsonArray docAr9 = qjd_doc.object().value("DCtotal").toArray();
+
+                QJsonArray docAr10 = qjd_doc.object().value("NPCplain").toArray();
+                QJsonArray docAr11 = qjd_doc.object().value("NPCdevProd").toArray();
+                QJsonArray docAr12 = qjd_doc.object().value("NPCdamProp").toArray();
+                QJsonArray docAr13 = qjd_doc.object().value("NPCforfeits").toArray();
+                QJsonArray docAr14 = qjd_doc.object().value("NPClossMat").toArray();
+                QJsonArray docAr15 = qjd_doc.object().value("NPCtotal").toArray();
+
+                QJsonArray docAr16 = qjd_doc.object().value("WCdeprecation").toArray();
+                QJsonArray docAr17 = qjd_doc.object().value("WCheating").toArray();
+                QJsonArray docAr18 = qjd_doc.object().value("WCdeductionWage").toArray();
+                QJsonArray docAr19 = qjd_doc.object().value("WCdeductionSalary").toArray();
+                QJsonArray docAr20 = qjd_doc.object().value("WCtotal").toArray();
+
+                QJsonArray docAr21 = qjd_doc.object().value("PEsfProducts").toArray();
+                QJsonArray docAr22 = qjd_doc.object().value("PEprimProd").toArray();
+                QJsonArray docAr23 = qjd_doc.object().value("PEauxiliaryProd").toArray();
+                QJsonArray docAr24 = qjd_doc.object().value("PEoverheadCosts").toArray();
+                QJsonArray docAr25 = qjd_doc.object().value("PEmarriage").toArray();
+                QJsonArray docAr26 = qjd_doc.object().value("PEprodService").toArray();
+                QJsonArray docAr27 = qjd_doc.object().value("PEtotal").toArray();
+
+                QJsonArray docAr28 = qjd_doc.object().value("AEWadditIncome").toArray();
+                QJsonArray docAr29 = qjd_doc.object().value("AEWaddEarning").toArray();
+                QJsonArray docAr30 = qjd_doc.object().value("AEWtotal").toArray();
+
+                QJsonArray docAr31 = qjd_doc.object().value("PERheating").toArray();
+                QJsonArray docAr32 = qjd_doc.object().value("PERwater").toArray();
+                QJsonArray docAr33 = qjd_doc.object().value("PERelectricity").toArray();
+                QJsonArray docAr34 = qjd_doc.object().value("PERtotal").toArray();
+
+                QJsonArray docAr35 = qjd_doc.object().value("DTBinsurance").toArray();
+                QJsonArray docAr36 = qjd_doc.object().value("DTBdepreciation").toArray();
+                QJsonArray docAr37 = qjd_doc.object().value("DTBtotal").toArray();
+
+                QJsonArray docAr38 = qjd_doc.object().value("MATmainMat").toArray();
+                QJsonArray docAr39 = qjd_doc.object().value("MATcostSf").toArray();
+                QJsonArray docAr40 = qjd_doc.object().value("MATrelatedMat").toArray();
+                QJsonArray docAr41 = qjd_doc.object().value("MATtotal").toArray();
+
+                QJsonArray docAr42 = qjd_doc.object().value("TCunitCost").toArray();
+                QJsonArray docAr43 = qjd_doc.object().value("TCcostDistrib").toArray();
+                QJsonArray docAr44 = qjd_doc.object().value("TCtotal").toArray();
+
+                for(int i =0; i<docAr.count(); i++)
+                {
+                    QList<QStandardItem*> q_list;
+                    QStandardItem* col = new QStandardItem(docAr[i].toObject().value("name").toString());
+                    QStandardItem* col2 = new QStandardItem(docAr2[i].toObject().value("dcpackaging").toString());
+                    QStandardItem* col3 = new QStandardItem(docAr3[i].toObject().value("dcdelivery").toString());
+                    QStandardItem* col4 = new QStandardItem(docAr4[i].toObject().value("dcloading").toString());
+                    QStandardItem* col5 = new QStandardItem(docAr5[i].toObject().value("dcfeels").toString());
+                    QStandardItem* col6 = new QStandardItem(docAr6[i].toObject().value("dcstorageroom").toString());
+                    QStandardItem* col7 = new QStandardItem(docAr7[i].toObject().value("dcadvertising").toString());
+                    QStandardItem* col8 = new QStandardItem(docAr8[i].toObject().value("dcentertainment").toString());
+                    QStandardItem* col9 = new QStandardItem(docAr9[i].toObject().value("dctotal").toString());
+
+                    QStandardItem* col10 = new QStandardItem(docAr10[i].toObject().value("npcplain").toString());
+                    QStandardItem* col11 = new QStandardItem(docAr11[i].toObject().value("npcdevprod").toString());
+                    QStandardItem* col12 = new QStandardItem(docAr12[i].toObject().value("npcdamprop").toString());
+                    QStandardItem* col13 = new QStandardItem(docAr13[i].toObject().value("npcforfeits").toString());
+                    QStandardItem* col14 = new QStandardItem(docAr14[i].toObject().value("npclossmat").toString());
+                    QStandardItem* col15 = new QStandardItem(docAr15[i].toObject().value("npctotal").toString());
+
+                    QStandardItem* col16 = new QStandardItem(docAr16[i].toObject().value("wcdeprecation").toString());
+                    QStandardItem* col17 = new QStandardItem(docAr17[i].toObject().value("wcheating").toString());
+                    QStandardItem* col18 = new QStandardItem(docAr18[i].toObject().value("wcdeductionwage").toString());
+                    QStandardItem* col19 = new QStandardItem(docAr19[i].toObject().value("wcdeductionsalary").toString());
+                    QStandardItem* col20 = new QStandardItem(docAr20[i].toObject().value("wctotal").toString());
+
+                    QStandardItem* col21 = new QStandardItem(docAr21[i].toObject().value("pesfproducts").toString());
+                    QStandardItem* col22 = new QStandardItem(docAr22[i].toObject().value("peprimprod").toString());
+                    QStandardItem* col23 = new QStandardItem(docAr23[i].toObject().value("peauxiliaryprod").toString());
+                    QStandardItem* col24 = new QStandardItem(docAr24[i].toObject().value("peoverheadcosts").toString());
+                    QStandardItem* col25 = new QStandardItem(docAr25[i].toObject().value("pemarriage").toString());
+                    QStandardItem* col26 = new QStandardItem(docAr26[i].toObject().value("peprodservice").toString());
+                    QStandardItem* col27 = new QStandardItem(docAr27[i].toObject().value("petotal").toString());
+
+                    QStandardItem* col28 = new QStandardItem(docAr28[i].toObject().value("aewadditincome").toString());
+                    QStandardItem* col29 = new QStandardItem(docAr29[i].toObject().value("aewaddearning").toString());
+                    QStandardItem* col30 = new QStandardItem(docAr30[i].toObject().value("aewtotal").toString());
+
+                    QStandardItem* col31 = new QStandardItem(docAr31[i].toObject().value("perheating").toString());
+                    QStandardItem* col32 = new QStandardItem(docAr32[i].toObject().value("perwater").toString());
+                    QStandardItem* col33 = new QStandardItem(docAr33[i].toObject().value("perelectricity").toString());
+                    QStandardItem* col34 = new QStandardItem(docAr34[i].toObject().value("pertotal").toString());
+
+                    QStandardItem* col35 = new QStandardItem(docAr35[i].toObject().value("dtbinsurance").toString());
+                    QStandardItem* col36 = new QStandardItem(docAr36[i].toObject().value("dtbdepreciation").toString());
+                    QStandardItem* col37 = new QStandardItem(docAr37[i].toObject().value("dtbtotal").toString());
+
+                    QStandardItem* col38 = new QStandardItem(docAr38[i].toObject().value("matmainmat").toString());
+                    QStandardItem* col39 = new QStandardItem(docAr39[i].toObject().value("matcostsf").toString());
+                    QStandardItem* col40 = new QStandardItem(docAr40[i].toObject().value("matrelatedmat").toString());
+                    QStandardItem* col41 = new QStandardItem(docAr41[i].toObject().value("mattotal").toString());
+
+                    QStandardItem* col42 = new QStandardItem(docAr42[i].toObject().value("tcunitcost").toString());
+                    QStandardItem* col43 = new QStandardItem(docAr43[i].toObject().value("tccostdistrib").toString());
+                    QStandardItem* col44 = new QStandardItem(docAr44[i].toObject().value("tctotal").toString());
 
                     q_list << col;
                     q_list << col2;
@@ -176,9 +323,39 @@ void CPclient::sockReady()
                     q_list << col13;
                     q_list << col14;
                     q_list << col15;
+                    q_list << col16;
+                    q_list << col17;
+                    q_list << col18;
+                    q_list << col19;
+                    q_list << col20;
+                    q_list << col21;
+                    q_list << col22;
+                    q_list << col23;
+                    q_list << col24;
+                    q_list << col25;
+                    q_list << col26;
+                    q_list << col27;
+                    q_list << col28;
+                    q_list << col29;
+                    q_list << col30;
+                    q_list << col31;
+                    q_list << col32;
+                    q_list << col33;
+                    q_list << col34;
+                    q_list << col35;
+                    q_list << col36;
+                    q_list << col37;
+                    q_list << col38;
+                    q_list << col39;
+                    q_list << col40;
+                    q_list << col41;
+                    q_list << col42;
+                    q_list << col43;
+                    q_list << col44;
 
                     model->appendRow(q_list);
                 }
+
                 ui->tableView->setModel(model);
             }
         }
@@ -190,6 +367,16 @@ void CPclient::sockReady()
             ui->statusline->setText("Размер: " + QString::number(int_requireSize) + " байт");
 
             socket->write("{\"type\":\"select\",\"params\":\"workers\"}");
+            socket->waitForBytesWritten(500);
+            qDebug()<<int_requireSize;
+        }
+        else if((qjd_doc.object().value("type").toString() == "size") && (qjd_doc.object().value("resp").toString() == "workers1"))
+        {
+            int_requireSize = qjd_doc.object().value("length").toInt();
+
+            ui->statusline->setText("Размер: " + QString::number(int_requireSize) + " байт");
+
+            socket->write("{\"type\":\"select\",\"params\":\"workers1\"}");
             socket->waitForBytesWritten(500);
             qDebug()<<int_requireSize;
         }
@@ -288,9 +475,8 @@ void CPclient::on_pushButton_clicked()
         else
             if((socket->isOpen()) && (bl_conStatus == true))
             {
-                QMessageBox::information(this,"Информация","Таблица еще не попала на сервер");
-                //socket->write("{\"type\":\"recSize\",\"resp\":\"workers1\"}");
-                //socket->waitForBytesWritten(500);
+                socket->write("{\"type\":\"recSize\",\"resp\":\"workers1\"}");
+                socket->waitForBytesWritten(500);
             }
             else
             {
