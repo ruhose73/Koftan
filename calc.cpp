@@ -248,10 +248,27 @@ void Calc::on_TC_total_but_clicked()
     query->addBindValue(QString::number(fl_TC_unitCost).toUtf8());
     query->addBindValue(QString::number(fl_TC_costDistrib).toUtf8());
     query->addBindValue(QString::number(fl_TC_unitProfit).toUtf8());
-
     if(!query->exec())
     {
         qDebug() << "Ошибка добавления записей concernDetail";
+    }
+
+    query->prepare("INSERT INTO concern(NAME, DCtotal, WCtotal, PEtotal, AEWtotal, PERtotal, DTBtotal, "
+                   "MATtotal, TCunitCost, TCcostDistrib,TCunitProfit) VALUES(?,?,?,?,?,?,?,?,?,?,?);");
+    query->addBindValue(qstr_name.toUtf8());
+    query->addBindValue(QString::number(fl_DC_total).toUtf8());
+    query->addBindValue(QString::number(fl_WC_total).toUtf8());
+    query->addBindValue(QString::number(fl_PE_total).toUtf8());
+    query->addBindValue(QString::number(fl_AEW_total).toUtf8());
+    query->addBindValue(QString::number(fl_PER_total).toUtf8());
+    query->addBindValue(QString::number(fl_DTB_total).toUtf8());
+    query->addBindValue(QString::number(fl_MAT_total).toUtf8());
+    query->addBindValue(QString::number(fl_TC_unitCost).toUtf8());
+    query->addBindValue(QString::number(fl_TC_costDistrib).toUtf8());
+    query->addBindValue(QString::number(fl_TC_unitProfit).toUtf8());
+    if(!query->exec())
+    {
+        qDebug() << "Ошибка добавления записей concern";
     }
 }
 
