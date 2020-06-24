@@ -43,6 +43,7 @@ private:
     QString qstr_password;
 
     QByteArray qba_Data;
+    QByteArray BDdata;
 
     QJsonDocument qjd_doc;
     QJsonDocument qjd_path;
@@ -83,11 +84,12 @@ private slots:
 
     void on_chooseDB_button_clicked();
 
-    void on_WriteCopyDB_box_stateChanged(int arg1);
+    void on_Download_clicked();
 
 private:
 
     Ui::CPclient *ui;
+
 };
 
 #endif // CPCLIENT_H

@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QtSql>
 #include <QSqlQuery>
+#include <QTcpSocket>
 
 namespace Ui {
 class Calc;
@@ -17,6 +18,8 @@ class Calc : public QWidget
 public:
     explicit Calc(QWidget *parent = nullptr);
     ~Calc();
+    void SetSocket(QTcpSocket* socket);
+
 
 private slots:
     void on_DC_total_but_clicked();
@@ -38,11 +41,11 @@ private slots:
     void on_TC_total_but_clicked();
 
 private:
+
+    void SendData();
     Ui::Calc *ui;
 
-    //(type)_(box)_(name)
-    //example: fl_DC_packaging - type = float, box = PE, name = packaging
-
+private:
     //Distribution Costs
     float fl_DC_packaging;
     float fl_DC_delivery;
@@ -109,8 +112,9 @@ private:
     float fl_TC_unitProfit;
 
     QString qstr_PathDB;
-
     QSqlDatabase LocalDataBase;
+    QString qstr_name;
+
 
 };
 

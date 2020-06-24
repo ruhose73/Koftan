@@ -48,11 +48,6 @@ CPclient::~CPclient()
     delete ui;
 }
 
-//      ("{\"type\":\"connect\",\"value\":\"true\"}")                                       статус подключения
-//      ("{\"type\":\"status\",\"value\":\"true\"}")                                        статус авторизации
-//      ("{\"type\":\"auth\",\"login\":\""+login+"\",\"password\":\""+password+"\"}")       авторизация
-//      ("{\"type\":\"data\",\"cost\":\""+cost+"\",\"profit\":\""+profit+"\"}");            обычные данные
-
 void CPclient::on_Connection_Button_clicked()
 {
     qstr_ipaddres = ui->IPline->text();
@@ -71,7 +66,7 @@ void CPclient::sockReady()
     qba_Data = socket->readAll();
     qjd_doc = QJsonDocument::fromJson(qba_Data,&qjpe_docError);
 
-    qDebug()<<qba_Data;
+    qDebug()<<qba_Data;//убрать к релизу
 
     if(qjpe_docError.errorString().toInt()==QJsonParseError::NoError)
     {
@@ -104,6 +99,7 @@ void CPclient::sockReady()
                 ui->loginline->clear();
                 QMessageBox::information(this,"Информация","Авторизация успешна");
                 bl_logStatus = true;
+
             }
             else
             {
@@ -360,25 +356,29 @@ void CPclient::sockReady()
             }
         }
 
-        else if((qjd_doc.object().value("type").toString() == "size") && (qjd_doc.object().value("resp").toString() == "workers"))
+        else if(qjd_doc.object().value("type").toString() == "size")
         {
-            int_requireSize = qjd_doc.object().value("length").toInt();
+            if(qjd_doc.object().value("resp").toString() == "workers")
+            {
+                int_requireSize = qjd_doc.object().value("length").toInt();
 
-            ui->statusline->setText("Размер: " + QString::number(int_requireSize) + " байт");
+                ui->statusline->setText("Размер: " + QString::number(int_requireSize) + " байт");
 
-            socket->write("{\"type\":\"select\",\"params\":\"workers\"}");
-            socket->waitForBytesWritten(500);
-            qDebug()<<int_requireSize;
-        }
-        else if((qjd_doc.object().value("type").toString() == "size") && (qjd_doc.object().value("resp").toString() == "workers1"))
-        {
-            int_requireSize = qjd_doc.object().value("length").toInt();
+                socket->write("{\"type\":\"select\",\"params\":\"workers\"}");
+                socket->waitForBytesWritten(500);
+                qDebug()<<int_requireSize;
+            }
+            else if(qjd_doc.object().value("resp").toString() == "workers1")
+            {
+                int_requireSize = qjd_doc.object().value("length").toInt();
 
-            ui->statusline->setText("Размер: " + QString::number(int_requireSize) + " байт");
+                ui->statusline->setText("Размер: " + QString::number(int_requireSize) + " байт");
 
-            socket->write("{\"type\":\"select\",\"params\":\"workers1\"}");
-            socket->waitForBytesWritten(500);
-            qDebug()<<int_requireSize;
+                socket->write("{\"type\":\"select\",\"params\":\"workers1\"}");
+                socket->waitForBytesWritten(500);
+                qDebug()<<int_requireSize;
+            }
+
         }
     }
 }
@@ -496,7 +496,7 @@ void CPclient::on_pushButton_clicked()
 
 void CPclient::on_CalcButton_clicked()
 {
-    Calc *calc = new Calc;
+    Calc *calc = new Calc();
     calc->show();
 }
 
@@ -512,16 +512,563 @@ void CPclient::on_chooseDB_button_clicked()
     PathfileJson.close();
 }
 
-void CPclient::on_WriteCopyDB_box_stateChanged(int arg1)
-{
 
-    if(arg1 == 2)
+void CPclient::on_Download_clicked()
+{
+    QString tablename = ui->DB_table_Box->currentText();
+
+    if(tablename == "Предприятие")
     {
-        bl_localBase = true;
+        BDdata.clear();
+        BDdata = "{\"type\":\"FillingConcern\",\"NAME\":[";
+
+        if(LocalDataBase.isOpen())
+        {
+
+            QSqlQuery* query = new QSqlQuery(LocalDataBase);
+            if(query->exec("SELECT NAME FROM concern")){
+                qDebug() << "Succsess";
+                while (query->next()) {
+                    BDdata.append("{\"name\":\""+ query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT \"DCtotal\" FROM concern")){
+                BDdata.append("\"DCtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"dctotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT WCtotal FROM concern")){
+                BDdata.append("\"WCtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"wctotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT PEtotal FROM concern")){
+                BDdata.append("\"PEtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"petotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT AEWtotal FROM concern")){
+                BDdata.append("\"AEWtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"aewtotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT PERtotal FROM concern")){
+                BDdata.append("\"PERtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"pertotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT DTBtotal FROM concern")){
+                BDdata.append("\"DTBtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"dtbtotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT MATtotal FROM concern")){
+                BDdata.append("\"MATtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"mattotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT TCunitCost FROM concern")){
+                BDdata.append("\"TCunitCost\":[");
+                while (query->next()){
+                    BDdata.append("{\"tcunitcost\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT TCcostDistrib FROM concern")){
+                BDdata.append("\"TCcostDistrib\":[");
+                while (query->next()){
+                    BDdata.append("{\"tccostdistrib\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT TCunitProfit FROM concern")){
+                BDdata.append("\"TCunitProfit\":[");
+                while (query->next()){
+                    BDdata.append("{\"tcunitprofit\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("]");
+            }
+
+            else
+            {
+                qDebug()<< "Not succsessful";
+            }
+            delete query;
+        }
+        BDdata.remove(BDdata.length()-1,1);
+        BDdata.append("]}");
+        socket->write(BDdata);
+        socket->waitForBytesWritten(500);
     }
     else
     {
-        bl_localBase = false;
-    }
+        BDdata.clear();
+        BDdata = "{\"type\":\"FillingConcernDetail\",\"NAME\":[";
+        if(LocalDataBase.isOpen()){
 
+            QSqlQuery* query = new QSqlQuery(LocalDataBase);
+            if(query->exec("SELECT NAME FROM concernDetail")){
+                qDebug() << "Succsess";
+                while (query->next()) {
+                    BDdata.append("{\"name\":\""+ query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT \"DCpackaging\" FROM concernDetail")){
+                BDdata.append("\"DCpackaging\":[");
+                while (query->next()){
+                    BDdata.append("{\"dcpackaging\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT DCdelivery FROM concernDetail")){
+                BDdata.append("\"DCdelivery\":[");
+                while (query->next()){
+                    BDdata.append("{\"dcdelivery\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT DCloading FROM concernDetail")){
+                BDdata.append("\"DCloading\":[");
+                while (query->next()){
+                    BDdata.append("{\"dcloading\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT DCfeels FROM concernDetail")){
+                BDdata.append("\"DCfeels\":[");
+                while (query->next()){
+                    BDdata.append("{\"dcfeels\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT DCstorageRoom FROM concernDetail")){
+                BDdata.append("\"DCstorageRoom\":[");
+                while (query->next()){
+                    BDdata.append("{\"dcstorageroom\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT DCadvertising FROM concernDetail")){
+                BDdata.append("\"DCadvertising\":[");
+                while (query->next()){
+                    BDdata.append("{\"dcadvertising\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT DCentertainment FROM concernDetail")){
+                BDdata.append("\"DCentertainment\":[");
+                while (query->next()){
+                    BDdata.append("{\"dcentertainment\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT DCtotal FROM concernDetail")){
+                BDdata.append("\"DCtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"dctotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT NPCplain FROM concernDetail")){
+                BDdata.append("\"NPCplain\":[");
+                while (query->next()){
+                    BDdata.append("{\"npcplain\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            if(query->exec("SELECT NPCdevProd FROM concernDetail")){
+                BDdata.append("\"NPCdevProd\":[");
+                while (query->next()){
+                    BDdata.append("{\"npcdevprod\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT NPCdamProp FROM concernDetail")){
+                BDdata.append("\"NPCdamProp\":[");
+                while (query->next()){
+                    BDdata.append("{\"npcdamprop\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT NPCforfeits FROM concernDetail")){
+                BDdata.append("\"NPCforfeits\":[");
+                while (query->next()){
+                    BDdata.append("{\"npcforfeits\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT NPClossMat FROM concernDetail")){
+                BDdata.append("\"NPClossMat\":[");
+                while (query->next()){
+                    BDdata.append("{\"npclossmat\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT NPCtotal FROM concernDetail")){
+                BDdata.append("\"NPCtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"npctotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT WCdeprecation FROM concernDetail")){
+                BDdata.append("\"WCdeprecation\":[");
+                while (query->next()){
+                    BDdata.append("{\"wcdeprecation\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT WCheating FROM concernDetail")){
+                BDdata.append("\"WCheating\":[");
+                while (query->next()){
+                    BDdata.append("{\"wcheating\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT WCdeductionWage FROM concernDetail")){
+                BDdata.append("\"WCdeductionWage\":[");
+                while (query->next()){
+                    BDdata.append("{\"wcdeductionwage\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT WCdeductionSalary FROM concernDetail")){
+                BDdata.append("\"WCdeductionSalary\":[");
+                while (query->next()){
+                    BDdata.append("{\"wcdeductionsalary\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT WCtotal FROM concernDetail")){
+                BDdata.append("\"WCtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"wctotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT PEsfProducts FROM concernDetail")){
+                BDdata.append("\"PEsfProducts\":[");
+                while (query->next()){
+                    BDdata.append("{\"pesfproducts\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT PEprimProd FROM concernDetail")){
+                BDdata.append("\"PEprimProd\":[");
+                while (query->next()){
+                    BDdata.append("{\"peprimprod\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT PEauxiliaryProd FROM concernDetail")){
+                BDdata.append("\"PEauxiliaryProd\":[");
+                while (query->next()){
+                    BDdata.append("{\"peauxiliaryprod\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT PEoverheadCosts FROM concernDetail")){
+                BDdata.append("\"PEoverheadCosts\":[");
+                while (query->next()){
+                    BDdata.append("{\"peoverheadcosts\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT PEmarriage FROM concernDetail")){
+                BDdata.append("\"PEmarriage\":[");
+                while (query->next()){
+                    BDdata.append("{\"pemarriage\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT PEprodService FROM concernDetail")){
+                BDdata.append("\"PEprodService\":[");
+                while (query->next()){
+                    BDdata.append("{\"peprodservice\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT PEtotal FROM concernDetail")){
+                BDdata.append("\"PEtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"petotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT AEWadditIncome FROM concernDetail")){
+                BDdata.append("\"AEWadditIncome\":[");
+                while (query->next()){
+                    BDdata.append("{\"aewadditincome\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT AEWaddEarning FROM concernDetail")){
+                BDdata.append("\"AEWaddEarning\":[");
+                while (query->next()){
+                    BDdata.append("{\"aewaddearning\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT AEWtotal FROM concernDetail")){
+                BDdata.append("\"AEWtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"aewtotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT PERheating FROM concernDetail")){
+                BDdata.append("\"PERheating\":[");
+                while (query->next()){
+                    BDdata.append("{\"perheating\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT PERwater FROM concernDetail")){
+                BDdata.append("\"PERwater\":[");
+                while (query->next()){
+                    BDdata.append("{\"perwater\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT PERelectricity FROM concernDetail")){
+                BDdata.append("\"PERelectricity\":[");
+                while (query->next()){
+                    BDdata.append("{\"perelectricity\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT PERtotal FROM concernDetail")){
+                BDdata.append("\"PERtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"pertotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT DTBinsurance FROM concernDetail")){
+                BDdata.append("\"DTBinsurance\":[");
+                while (query->next()){
+                    BDdata.append("{\"dtbinsurance\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT DTBdepreciation FROM concernDetail")){
+                BDdata.append("\"DTBdepreciation\":[");
+                while (query->next()){
+                    BDdata.append("{\"dtbdepreciation\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT DTBtotal FROM concernDetail")){
+                BDdata.append("\"DTBtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"dtbtotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+
+            //
+            if(query->exec("SELECT MATmainMat FROM concernDetail")){
+                BDdata.append("\"MATmainMat\":[");
+                while (query->next()){
+                    BDdata.append("{\"matmainmat\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT MATcostSf FROM concernDetail")){
+                BDdata.append("\"MATcostSf\":[");
+                while (query->next()){
+                    BDdata.append("{\"matcostsf\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT MATrelatedMat FROM concernDetail")){
+                BDdata.append("\"MATrelatedMat\":[");
+                while (query->next()){
+                    BDdata.append("{\"matrelatedmat\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT MATtotal FROM concernDetail")){
+                BDdata.append("\"MATtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"mattotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            //
+            if(query->exec("SELECT TCunitCost FROM concernDetail")){
+                BDdata.append("\"TCunitCost\":[");
+                while (query->next()){
+                    BDdata.append("{\"tcunitcost\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT TCcostDistrib FROM concernDetail")){
+                BDdata.append("\"TCcostDistrib\":[");
+                while (query->next()){
+                    BDdata.append("{\"tccostdistrib\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("],");
+            }
+            if(query->exec("SELECT TCtotal FROM concernDetail")){
+                BDdata.append("\"TCtotal\":[");
+                while (query->next()){
+                    BDdata.append("{\"tctotal\":\"" + query->value(0).toString()+"\"},");
+                }
+
+                BDdata.remove(BDdata.length()-1,1);
+                BDdata.append("]");
+            }
+
+            else
+            {
+                qDebug()<< "Not succsessful";
+            }
+            delete query;
+        }
+        BDdata.remove(BDdata.length()-1,1);
+        BDdata.append("]}");
+        socket->write(BDdata);
+        socket->waitForBytesWritten(500);
+    }
 }

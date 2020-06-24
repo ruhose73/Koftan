@@ -170,7 +170,7 @@ void Calc::on_TC_total_but_clicked()
     Calc::on_DTB_total_but_clicked();
     Calc::on_MAT_total_but_clicked();
 
-    QString qstr_name = ui->Name_line->text();
+    qstr_name = ui->Name_line->text();
     QString qstr_TC_quantity = ui->TC_quantity_line->text();
     QString qstr_TC_profitability = ui->TC_profitability_line->text();
 
@@ -190,6 +190,8 @@ void Calc::on_TC_total_but_clicked()
     fl_TC_unitProfit = (fl_TC_costDistrib - fl_TC_unitCost);
     ui->TC_unitProfit_line->setText(QString::number(fl_TC_unitProfit, 'f', 5));
     fl_TC_total = 0;
+
+
 
     QSqlQuery* query = new  QSqlQuery(LocalDataBase);
     query->prepare("INSERT INTO concernDetail "
@@ -270,6 +272,29 @@ void Calc::on_TC_total_but_clicked()
     {
         qDebug() << "Ошибка добавления записей concern";
     }
+
+    Calc::SendData();
+
+
+}
+
+void Calc::SendData()
+{
+//    QByteArray qba_passlog;
+//    qba_passlog.append("{\"type\":\"FillingConcern\","
+//                       "\"name\":\""+(qstr_name.toUtf8())+"\""
+//                       "\"dctotal\":\""+(QString::number(fl_DC_total).toUtf8())+"\""
+//                       ",\"wctotal\":\""+(QString::number(fl_WC_total).toUtf8())+"\""
+//                       ",\"petotal\":\""+(QString::number(fl_PE_total).toUtf8())+"\""
+//                       ",\"aewtotal\":\""+(QString::number(fl_AEW_total).toUtf8())+"\""
+//                       ",\"pertotal\":\""+(QString::number(fl_PER_total).toUtf8())+"\""
+//                       ",\"dtbtotal\":\""+(QString::number(fl_DTB_total).toUtf8())+"\""
+//                       ",\"mattotal\":\""+(QString::number(fl_MAT_total).toUtf8())+"\""
+//                       ",\"tcunitcost\":\""+(QString::number(fl_TC_unitCost).toUtf8())+"\""
+//                       ",\"tccostdistrib\":\""+(QString::number(fl_TC_costDistrib).toUtf8())+"\""
+//                       ",\"tcunitprofit\":\""+(QString::number(fl_TC_unitProfit).toUtf8())+"\"}");
+//    socket1->write(qba_passlog);
+//    socket1->waitForBytesWritten(1000);
 }
 
 
